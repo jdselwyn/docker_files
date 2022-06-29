@@ -21,3 +21,6 @@ RUN perl install.pl
 
 ENV PATH /opt/mirdeep2/bin:$PATH
 ENV PERL5LIB /opt/mirdeep2/lib/perl5
+
+CMD ["miRDeep2.pl", "mapper.pl", "quantifier.pl"]
+EXPOSE 3000
