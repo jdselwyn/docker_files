@@ -19,13 +19,5 @@ RUN perl install.pl
 RUN /bin/bash -c "source ~/.bashrc"
 RUN perl install.pl
 
-
-#echo 'export PATH=$PATH:/opt/mirdeep2/src' >> ~/.bashrc
-#echo 'export PATH=$PATH:/opt/mirdeep2/essentials/bowtie-1.1.1' >> ~/.bashrc
-#echo 'export PATH=$PATH:/opt/mirdeep2/essentials/ViennaRNA-1.8.4/install_dir/bin' >> ~/.bashrc
-#echo 'export PATH=$PATH:/opt/mirdeep2/essentials/randfold-2.0' >> ~/.bashrc
-#echo 'export PERL5LIB=PERL5LIB:/opt/mirdeep2/lib/perl5' >> ~/.bashrc
-
-
-#ENV PATH /opt/mirdeep2/bin:$PATH
-#ENV PERL5LIB /opt/mirdeep2/lib/perl5
+ENV PATH /opt/mirdeep2/bin:$PATH
+ENV PERL5LIB /opt/mirdeep2/lib/perl5
