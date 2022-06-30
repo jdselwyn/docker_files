@@ -9,7 +9,16 @@ RUN dnf -y groupinstall "Development Tools"
 RUN dnf install -y gcc make git wget python3 zip perl
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
+RUN dnf config-manager --set-enabled powertools
+
+
 WORKDIR /opt
+
+RUN wget http://www.city-fan.org/ftp/contrib/yum-repo/rhel8/x86_64/perl-Graphics-TIFF-6-4.el8.x86_64.rpm
+RUN wget http://www.city-fan.org/ftp/contrib/yum-repo/rhel8/x86_64/perl-PDF-API2-2.033-6.el8.noarch.rpm
+RUN wget http://www.city-fan.org/ftp/contrib/yum-repo/rhel8/x86_64/perl-Font-TTF-1.06-8.el8.noarch.rpm
+
+RUN dnf -y install perl-PDF-API2-2.033-6.el8.noarch.rpm perl-Font-TTF-1.06-8.el8.noarch.rpm perl-Graphics-TIFF-6-4.el8.x86_64.rpm
 
 RUN git clone https://github.com/rajewsky-lab/mirdeep2.git
 
@@ -21,6 +30,3 @@ RUN perl install.pl
 
 ENV PATH /opt/mirdeep2/bin:$PATH
 ENV PERL5LIB /opt/mirdeep2/lib/perl5
-
-CMD ["miRDeep2.pl", "mapper.pl", "quantifier.pl"]
-EXPOSE 3000
