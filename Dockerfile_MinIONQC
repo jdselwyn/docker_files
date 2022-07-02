@@ -16,17 +16,7 @@ WORKDIR /opt
 
 RUN wget https://raw.githubusercontent.com/roblanf/minion_qc/master/MinIONQC.R -O ./MinIONQC.R
 
-RUN Rscript -e 'install.packages(c("data.table",
-                   "futile.logger",
-                   "ggplot2",
-                   "optparse",
-                   "plyr",
-                   "readr",
-                   "reshape2",
-                   "scales",
-                   "viridis",
-                   "yaml"),
-                   repos="http://cran.us.r-project.org")'
+RUN Rscript -e 'install.packages(c("data.table", "futile.logger", "ggplot2", "optparse", "plyr", "readr", "reshape2", "scales", "viridis", "yaml"), repos="http://cran.us.r-project.org")'
 
 RUN sed '2 a options(bitmapType="cairo")' MinIONQC.R > MinIONQC.R
 ENV PATH /opt:$PATH
