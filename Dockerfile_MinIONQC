@@ -28,7 +28,5 @@ RUN Rscript -e 'install.packages(c("data.table",
                    "yaml"),
                    repos="http://cran.us.r-project.org")'
 
-RUN
-
-sed '2 a options(bitmapType="cairo")' MinIONQC.R > MinIONQC.R
+RUN sed '2 a options(bitmapType="cairo")' MinIONQC.R > MinIONQC.R
 ENV PATH /opt:$PATH
