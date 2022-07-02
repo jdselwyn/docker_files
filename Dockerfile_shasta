@@ -1,42 +1,9 @@
 #Create container for shasta https://github.com/chanzuckerberg/shasta to run on NEU Discovery
 
-FROM ubuntu
+FROM centos
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
-#RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
-#RUN dnf -y distro-sync
-#RUN dnf -y makecache
-#RUN dnf -y groupinstall "Development Tools"
-#RUN dnf install -y gcc make git cmake
-
-RUN apt-get update
-RUN apt-get install --yes \
-    git \
-    g++ \
-    make \
-    cmake \
-    curl \
-    libboost-system-dev \
-    libboost-program-options-dev \
-    libboost-graph-dev \
-    libboost-chrono-dev \
-    libpng-dev \
-    libblas-dev \
-    liblapack-dev \
-    gfortran \
-    libseqan2-dev
-
-WORKDIR /opt
-
-RUN git clone https://github.com/chanzuckerberg/shasta.git
-
-RUN shasta/scripts/InstallPrerequisites-Ubuntu.sh
-
-RUN mkdir shasta-build
-WORKDIR shasta-build
-RUN cmake ../shasta
-#RUN make all -j
-#RUN make install
-
-#ENV PATH /opt/shasta-build/shasta-install/bin:$PATH
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
