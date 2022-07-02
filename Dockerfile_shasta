@@ -36,7 +36,7 @@ RUN shasta/scripts/InstallPrerequisites-Ubuntu.sh
 RUN mkdir shasta-build
 WORKDIR shasta-build
 RUN cmake ../shasta
-RUN make all -j
-RUN make install
+#RUN make all -j
+#RUN make install
 
-ENV PATH /opt/shasta-build/shasta-install/bin:$PATH
+#ENV PATH /opt/shasta-build/shasta-install/bin:$PATH
