@@ -17,4 +17,4 @@ RUN curl -O -L https://github.com/chanzuckerberg/shasta/releases/download/0.10.0
 RUN chmod ugo+x shasta-Linux-0.10.0
 RUN mv shasta-Linux-0.10.0 shasta
 
-ENV PATH /opt/shasta:$PATH
+ENV PATH /opt:$PATH
