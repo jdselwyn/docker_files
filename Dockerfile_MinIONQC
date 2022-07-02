@@ -10,7 +10,8 @@ RUN dnf -y makecache
 
 RUN dnf -y groupinstall "Development Tools"
 RUN dnf config-manager --set-enabled powertools
-RUN dnf -y install wget epel-release R
+RUN dnf -y install wget epel-release
+RUN dnf -y install R
 
 WORKDIR /opt
 
