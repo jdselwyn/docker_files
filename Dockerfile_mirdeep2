@@ -1,3 +1,4 @@
+#Create container for mirdeep2 https://github.com/rajewsky-lab/mirdeep2.git to run on NEU Discovery
 FROM centos
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
