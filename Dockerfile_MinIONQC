@@ -1,0 +1,11 @@
+#Create container for MinIONQC https://github.com/roblanf/minion_qc to run on NEU Discovery
+
+FROM centos
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
+
+WORKDIR /opt
