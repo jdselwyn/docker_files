@@ -19,5 +19,3 @@ WORKDIR /opt/wtdbg2
 RUN make
 
 ENV PATH /opt/wtdbg2:$PATH
-#ENV PATH /opt/wtdbg2/wtdbg2:$PATH
-#ENV PATH /opt/wtdbg2/wtpoa-cns:$PATH
