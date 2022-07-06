@@ -1,4 +1,4 @@
-#Create container for Prost https://github.com/ruanjue/wtdbg2 to run on NEU Discovery
+#Create container for Prost https://prost.readthedocs.io/en/latest/ to run on NEU Discovery
 
 FROM centos
 
