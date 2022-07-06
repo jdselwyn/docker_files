@@ -9,20 +9,20 @@ RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
 RUN dnf install -y gcc make git wget
-RUN dnf install -y python2-dev
-RUN ln -s /usr/bin/python2 /usr/bin/python
+#RUN dnf install -y python2-dev
+#RUN ln -s /usr/bin/python2 /usr/bin/python
 
-WORKDIR /opt
+#WORKDIR /opt
 
-RUN wget https://sourceforge.net/projects/bbmap/files/BBMap_38.96.tar.gz
-RUN tar xzf BBMap_38.96.tar.gz
-RUN rm -rf BBMap_38.96.tar.gz
+#RUN wget https://sourceforge.net/projects/bbmap/files/BBMap_38.96.tar.gz
+#RUN tar xzf BBMap_38.96.tar.gz
+#RUN rm -rf BBMap_38.96.tar.gz
 
 
-RUN git clone https://github.com/uoregon-postlethwait/prost
-WORKDIR /opt/prost
+#RUN git clone https://github.com/uoregon-postlethwait/prost
+#WORKDIR /opt/prost
 
 # Install (systemwide)
-RUN python setup.py install
+#RUN python setup.py install
 
-ENV PATH /opt/bbmap:/opt/prost:$PATH
+#ENV PATH /opt/bbmap:/opt/prost:$PATH
