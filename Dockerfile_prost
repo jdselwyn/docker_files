@@ -8,7 +8,8 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget python2-dev
+RUN dnf install -y gcc make git wget
+RUN dnf install -y python2-dev
 RUN ln -s /usr/bin/python2 /usr/bin/python
 
 WORKDIR /opt
