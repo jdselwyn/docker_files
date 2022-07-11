@@ -1,0 +1,15 @@
+#Create container for Kmergenie (http://kmergenie.bx.psu.edu/)to run on NEU Discovery
+
+FROM centos
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
+RUN dnf -y groupinstall "Development Tools"
+RUN dnf install -y gcc make git wget python3 R
+
+WORKDIR /opt
+
+RUN wget http://kmergenie.bx.psu.edu/kmergenie-1.7051.tar.gz
