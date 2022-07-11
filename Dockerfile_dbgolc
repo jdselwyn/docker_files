@@ -8,18 +8,19 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget perl
+RUN dnf install -y gcc make git wget
 
 WORKDIR /opt
 
-git clone https://github.com/Yandell-Lab/maker
+git clone https://github.com/yechengxi/SparseAssembler
+git clone https://github.com/yechengxi/DBG2OLC
 
-cd maker/src/
-perl Build.PL
+#cd maker/src/
+#perl Build.PL
 
 
 #./Build status
 
-./Build installdeps
-./Build installexes
-./Build install
+#./Build installdeps
+#./Build installexes
+#./Build install
