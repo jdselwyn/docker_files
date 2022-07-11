@@ -24,4 +24,4 @@ WORKDIR /opt/kmergenie-1.7051
 
 RUN make
 
-ENV PATH /opt/kmergenie-1.7051.tar.gz:$PATH
+ENV PATH /opt/kmergenie-1.7051:$PATH
