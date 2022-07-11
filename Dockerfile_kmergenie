@@ -20,6 +20,8 @@ RUN wget http://kmergenie.bx.psu.edu/kmergenie-1.7051.tar.gz
 RUN tar xzf kmergenie-1.7051.tar.gz
 RUN rm -rf kmergenie-1.7051.tar.gz
 
+WORKDIR /opt/kmergenie-1.7051
+
 RUN make
 
 ENV PATH /opt/kmergenie-1.7051.tar.gz:$PATH
