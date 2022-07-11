@@ -8,8 +8,18 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget
+RUN dnf install -y gcc make git wget python3
+RUN dnf install -y epel-release
+RUN dnf config-manager --set-enabled powertools
+RUN dnf install -y R
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 WORKDIR /opt
 
 RUN wget http://kmergenie.bx.psu.edu/kmergenie-1.7051.tar.gz
+RUN tar xzf kmergenie-1.7051.tar.gz
+RUN rm -rf kmergenie-1.7051.tar.gz
+
+RUN make
+
+ENV PATH /opt/kmergenie-1.7051.tar.gz:$PATH
