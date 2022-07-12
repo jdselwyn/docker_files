@@ -15,6 +15,6 @@ WORKDIR /opt
 RUN git clone https://github.com/yechengxi/DBG2OLC
 RUN mv DBG2OLC tmp
 RUN mv tmp/compiled/* ./
-RUN rm -rf tmp
+#RUN rm -rf tmp
 
-ENV PATH /opt:$PATH
+#ENV PATH /opt:$PATH
