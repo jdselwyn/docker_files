@@ -13,6 +13,6 @@ RUN dnf install -y gcc make git wget
 WORKDIR /opt
 
 RUN wget http://platanus.bio.titech.ac.jp/?ddownload=145 -O /opt/platanus
-chmod +x /opt/platanus
+RUN chmod +x /opt/platanus
 
 ENV PATH /opt:$PATH
