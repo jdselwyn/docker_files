@@ -19,3 +19,5 @@ RUN make install
 
 RUN chmod -R 755 lib Bin pita_prediction.pl
 RUN chmod 775 known_mirs
+
+ENV PATH /opt:$PATH
