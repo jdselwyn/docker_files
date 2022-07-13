@@ -1,0 +1,15 @@
+#Create container for platanus (http://platanus.bio.titech.ac.jp/platanus-assembler/platanus-1-2-4) to run on NEU Discovery
+
+FROM centos
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
+RUN dnf -y groupinstall "Development Tools"
+RUN dnf install -y gcc make git wget
+
+WORKDIR /opt
+
+RUN wget https://genie.weizmann.ac.il/pubs/mir07/64bit_exe_pita_prediction.tar.gz -O /opt/pita
