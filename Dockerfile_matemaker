@@ -7,11 +7,9 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget python3 zip perl
-RUN ln -s /usr/bin/python3 /usr/bin/python
+RUN dnf install -y gcc make git perl
 
 RUN dnf config-manager --set-enabled powertools
-
 
 WORKDIR /opt
 
@@ -27,10 +25,8 @@ WORKDIR /opt
 RUN git clone https://github.com/josephryan/matemaker
 WORKDIR /opt/matemaker
 RUN perl Makefile.PL
-#RUN make
-#RUN make install
+RUN make
+RUN make install
 
-#WORKDIR /opt
-#ENV PATH /opt/matemaker:$PATH
-#ENV PERL5LIB /opt/JFR-PerlModules/lib/JFR
-#RUN ln -s /usr/bin/perl /opt/matemaker/perl
+ENV PATH /opt/matemaker:$PATH
+#matemaker --assembly=example/Hsap.chr22.subopt.fa --insertsize=2000 --out=chr22.2000
