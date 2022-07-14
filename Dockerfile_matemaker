@@ -32,3 +32,4 @@ RUN make install
 
 WORKDIR /opt
 ENV PATH /opt/matemaker:$PATH
+ENV PERL5LIB /opt/JFR-PerlModules/lib/JFR
