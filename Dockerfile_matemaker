@@ -27,10 +27,10 @@ WORKDIR /opt
 RUN git clone https://github.com/josephryan/matemaker
 WORKDIR /opt/matemaker
 RUN perl Makefile.PL
-RUN make
-RUN make install
+#RUN make
+#RUN make install
 
-WORKDIR /opt
-ENV PATH /opt/matemaker:$PATH
-ENV PERL5LIB /opt/JFR-PerlModules/lib/JFR
-RUN ln -s /usr/bin/perl /opt/matemaker/perl
+#WORKDIR /opt
+#ENV PATH /opt/matemaker:$PATH
+#ENV PERL5LIB /opt/JFR-PerlModules/lib/JFR
+#RUN ln -s /usr/bin/perl /opt/matemaker/perl
