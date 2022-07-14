@@ -28,5 +28,7 @@ RUN perl Makefile.PL
 RUN make
 RUN make install
 
+sed -i "1s/.*/\#\!\/usr\/bin\/perl/" matemaker
+
 ENV PATH /opt/matemaker:$PATH
 #matemaker --assembly=example/Hsap.chr22.subopt.fa --insertsize=2000 --out=chr22.2000
