@@ -19,10 +19,10 @@ RUN wget http://research-pub.gene.com/gmap/src/gmap-gsnap-2021-12-17.tar.gz
 RUN tar xzvf gmap-gsnap-2021-12-17.tar.gz
 RUN rm -rf gmap-gsnap-2021-12-17.tar.gz
 
-WORKDIR /opt/gmap-gsnap-2021-12-17
-#RUN ./configure
-#RUN make
-#RUN make check
-#RUN make install
+WORKDIR /opt/gmap-2021-12-17
+RUN ./configure
+RUN make
+RUN make check
+RUN make install
 
-#ENV PATH /opt/gmap-gsnap-2021-12-17/src:$PATH
+ENV PATH /opt/gmap-gsnap-2021-12-17/src:$PATH
