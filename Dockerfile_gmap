@@ -1,0 +1,24 @@
+#Create container for Gmap http://research-pub.gene.com/gmap/ to run on NEU Discovery
+FROM centos
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
+RUN dnf -y groupinstall "Development Tools"
+RUN dnf install -y gcc make git wget python3 zip perl
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+RUN dnf config-manager --set-enabled powertools
+
+
+WORKDIR /opt
+
+RUN wget http://research-pub.gene.com/gmap/src/gmap-gsnap-2021-12-17.tar.gz
+
+
+#./configure
+#make
+#make check   (optional)
+#make install
