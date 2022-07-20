@@ -91,6 +91,11 @@ RUN mv rmblast*/bin/rmblastn /usr/local/bin && rm -rf rmblast*
 RUN wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz
 RUN tar -xzvf RepeatMasker*.tar.gz && rm -f RepeatMasker*.tar.gz
 
+#Here is where to install alternate RepeatMasker Libraries
+#Add RepBase RepeatMasker Edition ( final version 10/26/2018 ) Library (?) - have *fasta version...will that work??
+#Requires license
+#https://www.repeatmasker.org/RepeatMasker/
+
 # Install RIPcal (not sure if this is actually needed for maker)
 WORKDIR /usr/local
 RUN wget http://downloads.sourceforge.net/project/ripcal/RIPCAL/RIPCAL_2.0/ripcal2_install.zip \
@@ -151,3 +156,31 @@ RUN git clone https://github.com/oushujun/LTR_retriever \
   && echo "HMMER=/usr/bin" >> paths \
   && echo "CDHIR=/usr/local/cdhit" >> paths \
   && echo "BLAST=" >> paths #intentionally not entered
+
+
+# Install RepeatModeler (not sure this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget https://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.3.tar.gz \
+  && tar -xzvf RepeatModeler-*.tar.gz \
+  && rm RepeatModeler-*.tar.gz \
+  && mv RepeatModeler-*/ RepeatModeler \
+  && cd RepeatModeler
+
+
+printf '\n' | \
+perl ./configure \
+  -genometools_dir /usr/local/ucscTools \
+  -rscout_dir /usr/local/bin/RepeatScout \
+  -cdhit_dir /usr/local/cdhit \
+  -ninja_dir /usr/local/NINJA \
+  -mafft_dir /usr/bin \
+  -repeatmasker_dir /usr/local/RepeatMasker \
+  -recon_dir /usr/local/recon/src \
+  -rmblast_dir /usr/local/bin \
+  -trf_dir /usr/local/bin \
+  -ucsctools_dir /usr/local/ucscTools \
+  -ltr_retriever_dir /usr/local/LTR_retriever
+
+
+#Set PATH
+ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler:${PATH}"
