@@ -91,6 +91,7 @@ RUN mv rmblast*/bin/rmblastn /usr/local/bin && rm -rf rmblast*
 # Install RepeatMasker - https://www.repeatmasker.org/RepeatMasker/
 RUN wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz
 RUN tar -xzvf RepeatMasker*.tar.gz && rm -f RepeatMasker*.tar.gz
+WORKDIR /usr/local/RepeatMasker
 RUN perl ./configure
 
 #Here is where to install alternate RepeatMasker Libraries
@@ -182,7 +183,7 @@ RUN printf '\n' | \
     -trf_dir /usr/local/bin \
     -ucsctools_dir /usr/local/ucscTools \
     -ltr_retriever_dir /usr/local/LTR_retriever
-
+#RepeatModeler doesn't appear to work at the moment (20-July-22) because of something wrong with rmblast_dir - dustmaker
 
 
 #Set PATH
