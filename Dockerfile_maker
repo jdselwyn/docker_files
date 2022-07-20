@@ -7,4 +7,4 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
 #https://github.com/chrishah/maker-docker/blob/master/ubuntu-basic/Dockerfile
 RUN apt-get update --fix-missing
-RUN apt-get install -y vim git wget unzip language-pack-en rsync libcurl4 #build-essential - doesn't work with build essential - maybe skip??
+RUN apt-get install -y build-essential vim git wget unzip language-pack-en rsync libcurl4
