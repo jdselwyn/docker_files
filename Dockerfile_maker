@@ -92,4 +92,100 @@ RUN mv rmblast*/bin/rmblastn /usr/local/bin && rm -rf rmblast*
 RUN wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz
 RUN tar -xzvf RepeatMasker*.tar.gz && rm -f RepeatMasker*.tar.gz
 WORKDIR /usr/local/RepeatMasker
-#RUN perl ./configure
+RUN printf '\n3\n\n\n5\n' | perl ./configure
+
+
+#Here is where to install alternate RepeatMasker Libraries
+#Add RepBase RepeatMasker Edition ( final version 10/26/2018 ) Library (?) - have *fasta version...will that work??
+#Requires license
+#https://www.repeatmasker.org/RepeatMasker/
+
+# Install RIPcal (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget http://downloads.sourceforge.net/project/ripcal/RIPCAL/RIPCAL_2.0/ripcal2_install.zip \
+	&& unzip ripcal*.zip \
+	&& rm ripcal*.zip \
+	&& mv ripcal* ripcal \
+	&& cd ripcal \
+	&& chmod +x perl/*
+
+# Install RECON (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz \
+	&& tar -xzvf RECON* \
+	&& rm RECON*.tar.gz \
+	&& mv RECON* recon \
+	&& cd recon/src \
+	&& make \
+	&& make install \
+	&& perl -i -0pe 's/\$path = "";/\$path = "\/usr\/local\/recon\/bin";/g' ../scripts/\recon.pl
+
+# Install RepeatModeler deps (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN apt-get install -qqy libjson-perl liburi-perl liblwp-useragent-determined-perl && \
+	apt-get clean && apt-get purge && \
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#Install CD-hit
+WORKDIR /usr/local
+RUN git clone https://github.com/weizhongli/cdhit \
+  && cd cdhit \
+  && make
+
+#Install UCSC Tools
+WORKDIR /usr/local/ucscTools
+RUN rsync -aP hgdownload.soe.ucsc.edu::genome/admin/exe/linux.x86_64/ ./
+
+#Install NINJA
+WORKDIR /usr/local
+RUN git clone https://github.com/TravisWheelerLab/NINJA \
+  && cd NINJA \
+  && git checkout cluster \
+  && mv NINJA/* ./ \
+  && rm -rf NINJA \
+  && make
+
+#Install MAFFT
+WORKDIR /usr/local
+RUN wget https://mafft.cbrc.jp/alignment/software/mafft_7.490-1_amd64.deb \
+  && dpkg -i mafft*deb
+
+#Install LTR_retriever
+WORKDIR /usr/local
+RUN git clone https://github.com/oushujun/LTR_retriever \
+  && cd LTR_retriever \
+  && mv paths original_paths \
+  && echo "BLAST+=/usr/lib/ncbi-blast+" > paths \
+  && echo "RepeatMasker=/usr/local/RepeatMasker" >> paths \
+  && echo "HMMER=/usr/bin" >> paths \
+  && echo "CDHIR=/usr/local/cdhit" >> paths \
+  && echo "BLAST=" >> paths #intentionally not entered
+
+
+# Install RepeatModeler (not sure this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget https://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.3.tar.gz \
+  && tar -xzvf RepeatModeler-*.tar.gz \
+  && rm RepeatModeler-*.tar.gz \
+  && mv RepeatModeler-*/ RepeatModeler \
+  && cd RepeatModeler
+
+WORKDIR /usr/local/RepeatModeler
+RUN printf '\n' | \
+  perl ./configure \
+    -genometools_dir /usr/local/ucscTools \
+    -rscout_dir /usr/local/bin/RepeatScout \
+    -cdhit_dir /usr/local/cdhit \
+    -ninja_dir /usr/local/NINJA \
+    -mafft_dir /usr/bin \
+    -repeatmasker_dir /usr/local/RepeatMasker \
+    -recon_dir /usr/local/recon/src \
+    -rmblast_dir /usr/local/bin \
+    -trf_dir /usr/local/bin \
+    -ucsctools_dir /usr/local/ucscTools \
+    -ltr_retriever_dir /usr/local/LTR_retriever
+#RepeatModeler doesn't appear to work at the moment (20-July-22) because of something wrong with rmblast_dir - dustmaker
+
+
+#Set PATH
+ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler:${PATH}"
