@@ -132,7 +132,7 @@ WORKDIR /usr/local
 RUN git clone https://github.com/TravisWheelerLab/NINJA \
   && cd NINJA \
   && git checkout cluster \
-  && mv NINJA ./ \
+  && mv NINJA/* ./ \
   && rm -rf NINJA \
   && make
 
