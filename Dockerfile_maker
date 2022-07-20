@@ -5,9 +5,11 @@ FROM ubuntu
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
+#RepeatMasker Library = default curated - Dfam
+
 #https://github.com/chrishah/maker-docker/blob/master/ubuntu-basic/Dockerfile
 RUN apt-get update --fix-missing
-RUN apt-get install -y build-essential vim git wget unzip language-pack-en rsync libcurl4
+RUN apt-get install -y build-essential vim git wget unzip language-pack-en rsync libcurl4 zlib1g-dev
 
 RUN apt-get install -y perl cpanminus
 RUN apt-get install -y python3 python3-pip
@@ -33,7 +35,7 @@ WORKDIR /usr/src
 ENV ZOE="/usr/src/SNAP/Zoe"
 
 # install Augustus
-RUN apt install -y augustus augustus-data augustus-doc libyaml-perl
+RUN apt-get install -y augustus augustus-data augustus-doc libyaml-perl
 
 #Download blat
 RUN rsync -aP rsync://hgdownload.soe.ucsc.edu/genome/admin/exe/linux.x86_64/blat/blat /usr/bin/
@@ -47,6 +49,9 @@ RUN cpanm YAML && \
         cpanm Hash::Merge && \
         cpanm Logger::Simple && \
         cpanm Parallel::ForkManager && \
+        cpanm Text::Soundex && \
+        cpanm File::Which && \
+        cpanm Devel::Size && \
 	cpanm MCE::Mutex && \
 	mkdir /usr/local/Genemark
 
@@ -55,7 +60,7 @@ ENV PATH="/usr/local/Genemark:${PATH}"
 
 #https://github.com/chrishah/maker-docker/blob/master/repeatmasker/Dockerfile
 #install Repeatmasker (much of this was taken and slighly modified from robsyme/repeatmasker-onbuild)
-# Install TRF (for RepeatScout)
+# Install TRF - Tandem Repeat Finder (for RepeatScout)
 WORKDIR /usr/local
 RUN cd bin && wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && mv trf*.linux64 trf && chmod +x trf
 
@@ -86,33 +91,63 @@ RUN mv rmblast*/bin/rmblastn /usr/local/bin && rm -rf rmblast*
 RUN wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz
 RUN tar -xzvf RepeatMasker*.tar.gz && rm -f RepeatMasker*.tar.gz
 
-#JDS - skipped unsure what it does
-#	&& perl -0p -e 's/\/usr\/local\/hmmer/\/usr\/bin/g;' \
-#	-e 's/\/usr\/local\/rmblast/\/usr\/local\/bin/g;' \
-#    -e 's/DEFAULT_SEARCH_ENGINE = "crossmatch"/DEFAULT_SEARCH_ENGINE = "ncbi"/g;' \
-#    -e 's/TRF_PRGM = ""/TRF_PRGM = "\/usr\/local\/bin\/trf"/g;' RepeatMasker/RepeatMaskerConfig.tmpl > RepeatMasker/RepeatMaskerConfig.pm
+# Install RIPcal (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget http://downloads.sourceforge.net/project/ripcal/RIPCAL/RIPCAL_2.0/ripcal2_install.zip \
+	&& unzip ripcal*.zip \
+	&& rm ripcal*.zip \
+	&& mv ripcal* ripcal \
+	&& cd ripcal \
+	&& chmod +x perl/*
 
-#Install Repeatmasker dependency perl module
-RUN cpanm Text::Soundex
+# Install RECON (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz \
+	&& tar -xzvf RECON* \
+	&& rm RECON*.tar.gz \
+	&& mv RECON* recon \
+	&& cd recon/src \
+	&& make \
+	&& make install \
+	&& perl -i -0pe 's/\$path = "";/\$path = "\/usr\/local\/recon\/bin";/g' ../scripts/\recon.pl
 
-#JDS - skipped they look fine??
-# Fix RepeatMasker's strange shebang lines
-#RUN cd /usr/local/RepeatMasker \
-#	&& perl -i -0pe 's/^#\!.*perl.*/#\!\/usr\/bin\/env perl/g' \
-#	RepeatMasker \
-#    DateRepeats \
-#    ProcessRepeats \
-#    RepeatProteinMask \
-#    DupMasker \
-#    util/queryRepeatDatabase.pl \
-#    util/queryTaxonomyDatabase.pl \
-#    util/rmOutToGFF3.pl \
-#    util/rmToUCSCTables.pl
+# Install RepeatModeler deps (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN apt-get install -qqy libjson-perl liburi-perl liblwp-useragent-determined-perl && \
+	apt-get clean && apt-get purge && \
+        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-#Add RepBase RepeatMasker Edition ( final version 10/26/2018 ) Library (?)
-#Requires license
-#    cp RepBaseRepeatMaskerEdition-20181026.tar.gz /usr/local/RepeatMasker/
-#    cd /usr/local/RepeatMasker
-#    gunzip RepBaseRepeatMaskerEdition-20181026.tar.gz
-#    tar xvf RepBaseRepeatMaskerEdition-20181026.tar
-#    rm RepBaseRepeatMaskerEdition-20181026.tar
+#Install CD-hit
+WORKDIR /usr/local
+RUN git clone https://github.com/weizhongli/cdhit \
+  && cd cdhit \
+  && make
+
+#Install UCSC Tools
+WORKDIR /usr/local/ucscTools
+RUN rsync -aP hgdownload.soe.ucsc.edu::genome/admin/exe/linux.x86_64/ ./
+
+#Install NINJA
+WORKDIR /usr/local
+RUN git clone https://github.com/TravisWheelerLab/NINJA \
+  && cd NINJA \
+  && git checkout cluster \
+  && mv NINJA ./ \
+  && rm -rf NINJA \
+  && make
+
+#Install MAFFT
+WORKDIR /usr/local
+wget https://mafft.cbrc.jp/alignment/software/mafft_7.490-1_amd64.deb \
+  && dpkg -i mafft*deb
+
+#Install LTR_retriever
+WORKDIR /usr/local
+git clone https://github.com/oushujun/LTR_retriever \
+  && cd LTR_retriever \
+  && mv paths original_paths \
+  && echo "BLAST+=/usr/lib/ncbi-blast+" > paths \
+  && echo "RepeatMasker=/usr/local/RepeatMasker" >> paths \
+  && echo "HMMER=/usr/bin" >> paths \
+  && echo "CDHIR=/usr/local/cdhit" >> paths \
+  && echo "BLAST=" >> paths #intentionally not entered
