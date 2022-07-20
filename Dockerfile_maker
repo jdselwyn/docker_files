@@ -166,20 +166,19 @@ RUN wget https://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.3.tar.gz \
   && mv RepeatModeler-*/ RepeatModeler \
   && cd RepeatModeler
 
-
-printf '\n' | \
-perl ./configure \
-  -genometools_dir /usr/local/ucscTools \
-  -rscout_dir /usr/local/bin/RepeatScout \
-  -cdhit_dir /usr/local/cdhit \
-  -ninja_dir /usr/local/NINJA \
-  -mafft_dir /usr/bin \
-  -repeatmasker_dir /usr/local/RepeatMasker \
-  -recon_dir /usr/local/recon/src \
-  -rmblast_dir /usr/local/bin \
-  -trf_dir /usr/local/bin \
-  -ucsctools_dir /usr/local/ucscTools \
-  -ltr_retriever_dir /usr/local/LTR_retriever
+RUN printf '\n' | \
+  perl ./configure \
+    -genometools_dir /usr/local/ucscTools \
+    -rscout_dir /usr/local/bin/RepeatScout \
+    -cdhit_dir /usr/local/cdhit \
+    -ninja_dir /usr/local/NINJA \
+    -mafft_dir /usr/bin \
+    -repeatmasker_dir /usr/local/RepeatMasker \
+    -recon_dir /usr/local/recon/src \
+    -rmblast_dir /usr/local/bin \
+    -trf_dir /usr/local/bin \
+    -ucsctools_dir /usr/local/ucscTools \
+    -ltr_retriever_dir /usr/local/LTR_retriever
 
 
 #Set PATH
