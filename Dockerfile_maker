@@ -166,6 +166,7 @@ RUN wget https://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.3.tar.gz \
   && mv RepeatModeler-*/ RepeatModeler \
   && cd RepeatModeler
 
+WORKDIR /usr/local/RepeatModeler
 RUN printf '\n' | \
   perl ./configure \
     -genometools_dir /usr/local/ucscTools \
