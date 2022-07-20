@@ -138,12 +138,12 @@ RUN git clone https://github.com/TravisWheelerLab/NINJA \
 
 #Install MAFFT
 WORKDIR /usr/local
-wget https://mafft.cbrc.jp/alignment/software/mafft_7.490-1_amd64.deb \
+RUN wget https://mafft.cbrc.jp/alignment/software/mafft_7.490-1_amd64.deb \
   && dpkg -i mafft*deb
 
 #Install LTR_retriever
 WORKDIR /usr/local
-git clone https://github.com/oushujun/LTR_retriever \
+RUN git clone https://github.com/oushujun/LTR_retriever \
   && cd LTR_retriever \
   && mv paths original_paths \
   && echo "BLAST+=/usr/lib/ncbi-blast+" > paths \
