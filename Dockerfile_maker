@@ -1,4 +1,5 @@
-#Create container for SparseAssembly (https://github.com/yechengxi/SparseAssembler) & DBG2OLC (https://github.com/yechengxi/DBG2OLC) to run on NEU Discovery
+#Create container for Maker (https://github.com/Yandell-Lab/maker) to run on NEU Discovery
+#Largly based on https://github.com/chrishah/maker-docker
 
 FROM centos
 
@@ -7,19 +8,5 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
 RUN dnf -y distro-sync
 RUN dnf -y makecache
-RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget perl
-
-WORKDIR /opt
-
-git clone https://github.com/Yandell-Lab/maker
-
-cd maker/src/
-perl Build.PL
-
-
-#./Build status
-
-./Build installdeps
-./Build installexes
-./Build install
+#RUN dnf -y groupinstall "Development Tools"
+#RUN dnf install -y gcc make git wget perl
