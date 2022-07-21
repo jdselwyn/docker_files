@@ -190,7 +190,7 @@ RUN printf '\n' | \
 #Set PATH
 ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler:${PATH}"
 
-#Install Maker Now
+#Install Maker Now - Not using MPI at the moment
 WORKDIR /usr/local
 RUN cpanm forks && \
 	cpanm forks::shared && \
@@ -203,6 +203,11 @@ RUN cpanm forks && \
 	cpanm BioPerl && \
   cpanm DBD::SQLite && \
   cpanm DBD::Pg
-RUN git clone https://github.com/Yandell-Lab/maker \
-  && cd maker/src
+RUN git clone https://github.com/Yandell-Lab/maker
 #perl Build.PL
+
+WORKDIR /usr/local/maker/src
+RUN printf '\n' | \
+  perl ./Build.PL
+
+ENV PATH="/usr/local/maker/bin:${PATH}"
