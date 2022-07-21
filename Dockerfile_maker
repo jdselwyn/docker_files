@@ -191,3 +191,18 @@ RUN printf '\n' | \
 ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler:${PATH}"
 
 #Install Maker Now
+WORKDIR /usr/local
+RUN cpanm forks && \
+	cpanm forks::shared && \
+	cpanm File::Which && \
+	cpanm Perl::Unsafe::Signals && \
+	cpanm Bit::Vector && \
+	cpanm Inline::C && \
+	cpanm IO::All && \
+	cpanm IO::Prompt && \
+	cpanm BioPerl && \
+  cpanm DBD::SQLite && \
+  cpanm DBD::Pg
+RUN git clone https://github.com/Yandell-Lab/maker \
+  && cd maker/src
+#perl Build.PL
