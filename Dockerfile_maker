@@ -192,4 +192,4 @@ ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/Repeat
 
 #Install Maker Now
 WORKDIR /usr/local
-git clone https://github.com/Yandell-Lab/maker
+RUN git clone https://github.com/Yandell-Lab/maker
