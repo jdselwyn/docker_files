@@ -189,3 +189,7 @@ RUN printf '\n' | \
 
 #Set PATH
 ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler:${PATH}"
+
+#Install Maker Now
+WORKDIR /usr/local
+git clone https://github.com/Yandell-Lab/maker
