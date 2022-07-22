@@ -101,9 +101,9 @@ RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2
   && gunzip isb-*-rmblast.patch.gz \
   && cd ncbi-blast*src
 WORKDIR /usr/local/ncbi-blast*src
-RUN patch -p1 < ../isb-*-rmblast.patch
-  && cd c++ \
-  && ./configure \
+RUN patch -p1 < ../isb-*-rmblast.patch 
+WORKDIR /usr/local/ncbi-blast*src/c++
+RUN ./configure \
       --with-mt \
       --without-debug \
       --without-krb5 \
