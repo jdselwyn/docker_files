@@ -15,12 +15,220 @@ RUN apt-get install -y perl cpanminus
 RUN apt-get install -y python3 python3-pip
 RUN pip install h5py
 RUN apt-get install -y exonerate hmmer ncbi-blast+
+RUN apt-get install -y augustus augustus-data augustus-doc libyaml-perl
+
+#Set language
+ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+
+#Install required PERL modules
+RUN cpanm YAML && \
+        cpanm Hash::Merge && \
+        cpanm Logger::Simple && \
+        cpanm Parallel::ForkManager && \
+        cpanm Text::Soundex && \
+        cpanm File::Which && \
+        cpanm Devel::Size && \
+	      cpanm MCE::Mutex && \
+        cpanm forks && \
+        cpanm forks::shared && \
+        cpanm File::Which && \
+        cpanm Perl::Unsafe::Signals && \
+        cpanm Bit::Vector && \
+        cpanm Inline::C && \
+        cpanm IO::All && \
+        cpanm IO::Prompt && \
+        cpanm BioPerl && \
+        cpanm DBD::SQLite && \
+        cpanm DBD::Pg
 
 #Add blast executables to location expected by RepeatModeler
 RUN for f in $(find /usr/bin/ -name '*blast*'); do ln -s $f /usr/local/bin/; done
 RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN ln -s /usr/bin/dustmasker /usr/local/bin/dustmasker
 
-#Set language
-ENV LANGUAGE en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+#https://github.com/chrishah/maker-docker/blob/master/ab-initio/Dockerfile
+# install SNAP
+WORKDIR /usr/src
+RUN git clone --recursive https://github.com/KorfLab/SNAP.git \
+  && cd /usr/src/SNAP \
+  && make \
+  && cd /usr/src
+ENV ZOE="/usr/src/SNAP/Zoe"
+
+#Download blat
+WORKDIR /usr/bin
+RUN rsync -aP rsync://hgdownload.soe.ucsc.edu/genome/admin/exe/linux.x86_64/blat/blat /usr/bin/
+ENV PATH="/usr/src/SNAP:/usr/share/augustus/scripts:${PATH}"
+
+#GeneMark
+mkdir /usr/local/Genemark
+ENV PATH="/usr/local/Genemark:${PATH}"
+
+#https://github.com/chrishah/maker-docker/blob/master/repeatmasker/Dockerfile
+#install Repeatmasker (much of this was taken and slighly modified from robsyme/repeatmasker-onbuild)
+# Install TRF - Tandem Repeat Finder (for RepeatScout)
+WORKDIR /usr/local
+RUN cd bin && \
+  wget http://tandem.bu.edu/trf/downloads/trf407b.linux64 && \
+  mv trf*.linux64 trf && \
+  chmod +x trf
+
+# Install nseg (for RepeatScout)
+WORKDIR /usr/local
+RUN mkdir nseg && \
+    cd nseg && \
+    wget ftp://ftp.ncbi.nih.gov/pub/seg/nseg/* && \
+    make && \
+    mv nseg ../bin && \
+    mv nmerge ../bin
+
+# Install RepeatScout
+WORKDIR /usr/local/bin
+RUN wget http://bix.ucsd.edu/repeatscout/RepeatScout-1.0.5.tar.gz && \
+    tar -xvf RepeatScout* && \
+    rm RepeatScout*.tar.gz && \
+    mv RepeatScout* RepeatScout && \
+    cd RepeatScout && \
+    make
+
+# Install RMBlast
+WORKDIR /usr/local
+RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-src.tar.gz \
+  && wget http://www.repeatmasker.org/isb-2.11.0+-rmblast.patch.gz \
+  && tar zxvf ncbi-blast*.tar.gz \
+  && rm -rf ncbi-blast*.tar.gz \
+  && gunzip isb-*-rmblast.patch.gz \
+  && cd ncbi-blast*src \
+  && patch -p1 < ../isb-*-rmblast.patch \
+  && cd c++ \
+  && ./configure \
+      --with-mt \
+      --without-debug \
+      --without-krb5 \
+      --without-openssl \
+      --with-projects=scripts/projects/rmblastn/project.lst \
+      --prefix=/usr/local/rmblast
+RUN make
+RUN make install
+#softlink blastn to rmblastn since they should be the same????
+RUN ln -s /usr/local/bin/blastn /usr/local/bin/rmblastn
+
+# Install RepeatMasker - https://www.repeatmasker.org/RepeatMasker/
+WORKDIR /usr/local
+RUN wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz \
+  && tar -xzvf RepeatMasker*.tar.gz \
+  && rm -f RepeatMasker*.tar.gz \
+  && cd /usr/local/RepeatMasker
+
+#Takes a very long time - get this working then sideload the full Dfam library
+#RUN wget https://www.dfam.org/releases/Dfam_3.2/families/Dfam.h5.gz \
+#  && gunzip Dfam.h5.gz \
+#  && mv Dfam.h5 /usr/local/RepeatMasker/Libraries
+
+#Here is where to install alternate RepeatMasker Libraries
+#Add RepBase RepeatMasker Edition ( final version 10/26/2018 ) Library (?) - have *fasta version...will that work??
+#Requires license
+#https://www.repeatmasker.org/RepeatMasker/
+
+RUN printf '\n3\n\n\n5\n' | perl ./configure
+
+
+# Install RIPcal (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget http://downloads.sourceforge.net/project/ripcal/RIPCAL/RIPCAL_2.0/ripcal2_install.zip \
+	&& unzip ripcal*.zip \
+	&& rm ripcal*.zip \
+	&& mv ripcal* ripcal \
+	&& cd ripcal \
+	&& chmod +x perl/*
+
+# Install RECON (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget http://www.repeatmasker.org/RepeatModeler/RECON-1.08.tar.gz \
+	&& tar -xzvf RECON* \
+	&& rm RECON*.tar.gz \
+	&& mv RECON* recon \
+	&& cd recon/src \
+	&& make \
+	&& make install \
+	&& perl -i -0pe 's/\$path = "";/\$path = "\/usr\/local\/recon\/bin";/g' ../scripts/\recon.pl
+
+
+# Install RepeatModeler deps (not sure if this is actually needed for maker)
+WORKDIR /usr/local
+RUN apt-get install -qqy libjson-perl liburi-perl liblwp-useragent-determined-perl && \
+	apt-get clean && \
+  apt-get purge && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#Install CD-hit
+WORKDIR /usr/local
+RUN git clone https://github.com/weizhongli/cdhit \
+  && cd cdhit \
+  && make
+
+#Install UCSC Tools
+WORKDIR /usr/local/ucscTools
+RUN rsync -aP hgdownload.soe.ucsc.edu::genome/admin/exe/linux.x86_64/ ./
+
+#Install NINJA
+WORKDIR /usr/local
+RUN git clone https://github.com/TravisWheelerLab/NINJA \
+  && cd NINJA \
+  && git checkout cluster \
+  && mv NINJA/* ./ \
+  && rm -rf NINJA \
+  && make
+
+#Install MAFFT
+WORKDIR /usr/local
+RUN wget https://mafft.cbrc.jp/alignment/software/mafft_7.490-1_amd64.deb \
+  && dpkg -i mafft*deb
+
+#Install LTR_retriever
+WORKDIR /usr/local
+RUN git clone https://github.com/oushujun/LTR_retriever \
+  && cd LTR_retriever \
+  && mv paths original_paths \
+  && echo "BLAST+=/usr/lib/ncbi-blast+" > paths \
+  && echo "RepeatMasker=/usr/local/RepeatMasker" >> paths \
+  && echo "HMMER=/usr/bin" >> paths \
+  && echo "CDHIR=/usr/local/cdhit" >> paths \
+  && echo "BLAST=" >> paths #intentionally not entered
+
+# Install RepeatModeler (not sure this is actually needed for maker)
+WORKDIR /usr/local
+RUN wget https://www.repeatmasker.org/RepeatModeler/RepeatModeler-2.0.3.tar.gz \
+  && tar -xzvf RepeatModeler-*.tar.gz \
+  && rm RepeatModeler-*.tar.gz \
+  && mv RepeatModeler-*/ RepeatModeler \
+  && cd RepeatModeler
+
+WORKDIR /usr/local/RepeatModeler
+RUN printf '\n' | \
+  perl ./configure \
+    -genometools_dir /usr/local/ucscTools \
+    -rscout_dir /usr/local/bin/RepeatScout \
+    -cdhit_dir /usr/local/cdhit \
+    -ninja_dir /usr/local/NINJA \
+    -mafft_dir /usr/bin \
+    -repeatmasker_dir /usr/local/RepeatMasker \
+    -recon_dir /usr/local/recon/src \
+    -rmblast_dir /usr/local/bin \
+    -trf_dir /usr/local/bin \
+    -ucsctools_dir /usr/local/ucscTools \
+    -ltr_retriever_dir /usr/local/LTR_retriever
+
+#Set PATH
+ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler:${PATH}"
+
+#Install Maker Now - Not using MPI at the moment
+WORKDIR /usr/local
+RUN git clone https://github.com/Yandell-Lab/maker
+WORKDIR /usr/local/maker/src
+RUN printf '\n' | \
+  perl ./Build.PL
+RUN perl ./Build install
+
+ENV PATH="/usr/local/maker/bin:${PATH}"
