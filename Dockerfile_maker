@@ -99,8 +99,9 @@ RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2
   && tar zxvf ncbi-blast*.tar.gz \
   && rm -rf ncbi-blast*.tar.gz \
   && gunzip isb-*-rmblast.patch.gz \
-  && cd ncbi-blast*src \
-  && patch -p1 < ../isb-*-rmblast.patch \
+  && cd ncbi-blast*src
+WORKDIR /usr/local/ncbi-blast*src
+RUN patch -p1 < ../isb-*-rmblast.patch
   && cd c++ \
   && ./configure \
       --with-mt \
