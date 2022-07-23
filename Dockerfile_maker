@@ -131,7 +131,7 @@ RUN wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.2-p1.tar.gz 
 #Add RepBase RepeatMasker Edition ( final version 10/26/2018 ) Library (?) - have *fasta version...will that work??
 #Requires license
 #https://www.repeatmasker.org/RepeatMasker/
-
+WORKDIR /usr/localRepeatMasker
 RUN printf '\n3\n\n\n5\n' | perl ./configure
 
 
