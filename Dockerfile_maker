@@ -113,7 +113,8 @@ RUN ./configure \
 RUN make
 RUN make install
 #softlink blastn to rmblastn since they should be the same????
-RUN ln -s /usr/local/bin/blastn /usr/local/bin/rmblastn
+#RUN ln -s /usr/local/rmblast/bin/rmblastn /usr/local/bin/rmblastn
+ENV PATH="/usr/local/rmblast/bin:${PATH}"
 
 # Install RepeatMasker - https://www.repeatmasker.org/RepeatMasker/
 WORKDIR /usr/local
@@ -216,7 +217,7 @@ RUN printf '\n' | \
     -mafft_dir /usr/bin \
     -repeatmasker_dir /usr/local/RepeatMasker \
     -recon_dir /usr/local/recon/src \
-    -rmblast_dir /usr/local/bin \
+    -rmblast_dir /usr/local/rmblast/bin \
     -trf_dir /usr/local/bin \
     -ucsctools_dir /usr/local/ucscTools \
     -ltr_retriever_dir /usr/local/LTR_retriever
