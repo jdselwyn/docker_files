@@ -234,3 +234,5 @@ RUN printf '\n' | \
 RUN perl ./Build install
 
 ENV PATH="/usr/local/maker/bin:${PATH}"
+
+ENV BLAST_USAGE_REPORT=false
