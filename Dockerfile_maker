@@ -244,4 +244,4 @@ ENV PATH="/usr/local/maker/bin:${PATH}"
 #Extra Scripts
 WORKDIR /usr/local/bin
 RUN wget https://github.com/hyphaltip/genome-scripts/raw/master/gene_prediction/zff2augustus_gbk.pl
-RUN chmod u+x zff2augustus_gbk.pl
+RUN chmod 777 zff2augustus_gbk.pl
