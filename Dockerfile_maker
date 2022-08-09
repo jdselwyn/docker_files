@@ -227,3 +227,16 @@ RUN printf '\n' | \
 
 #Set PATH
 ENV PATH="/usr/local/RepeatMasker:/usr/local/RepeatMasker/util:/usr/local/RepeatScout:/usr/local/recon/bin:/usr/local/RepeatModeler:${PATH}"
+
+#Install Maker Now - Not using MPI at the moment
+WORKDIR /usr/local
+RUN git clone https://github.com/Yandell-Lab/maker
+WORKDIR /usr/local/maker/src
+RUN printf '\n' | \
+  perl ./Build.PL
+RUN perl ./Build install
+
+RUN ln -s /usr/local/RepeatMasker/Libraries/RMRBSeqs.embl /usr/local/RepeatMasker/Libraries/RepeatMaskerLib.embl
+ENV REPEATMASKER_LIB_DIR=/usr/local/RepeatMasker/Libraries
+ENV BLAST_USAGE_REPORT=false
+ENV PATH="/usr/local/maker/bin:${PATH}"
