@@ -248,9 +248,9 @@ WORKDIR /usr/local/bin
 RUN wget https://github.com/EVidenceModeler/EVidenceModeler/archive/refs/tags/v1.1.1.tar.gz \
   && tar -xzvf v1.1.1.tar.gz \
   && rm v1.1.1.tar.gz \
-  && mv EVidenceModeler-1.1.1/ EvidenceModeler
-ENV EVM_HOME=/usr/local/bin/EvidenceModeler
-ENV PATH="/usr/local/bin/EvidenceModeler:${PATH}"
+  && mv EVidenceModeler-1.1.1/ EVidenceModeler
+ENV EVM_HOME=/usr/local/bin/EVidenceModeler
+ENV PATH="/usr/local/bin/EVidenceModeler:${PATH}"
 
 #Install tRNAscan-SE
 WORKDIR /usr/local/bin
@@ -266,3 +266,6 @@ RUN wget http://trna.ucsc.edu/software/trnascan-se-2.0.9.tar.gz \
 WORKDIR /usr/local
 RUN git clone https://github.com/Yandell-Lab/maker
 WORKDIR /usr/local/maker/src
+RUN printf '\n' | \
+  perl ./Build.PL
+RUN perl ./Build install
