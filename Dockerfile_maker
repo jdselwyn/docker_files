@@ -257,4 +257,12 @@ WORKDIR /usr/local/bin
 RUN wget http://trna.ucsc.edu/software/trnascan-se-2.0.9.tar.gz \
   && tar -xzvf trnascan-se-2.0.9.tar.gz \
   && rm trnascan-se-2.0.9.tar.gz \
-  && mv tRNAscan-SE-2.0/ tRNAscan-SE
+  && cd tRNAscan-SE-2.0 \
+  && ./configure \
+  && make \
+  && make install
+
+#Install Maker Now - Not using MPI at the moment
+WORKDIR /usr/local
+RUN git clone https://github.com/Yandell-Lab/maker
+WORKDIR /usr/local/maker/src
