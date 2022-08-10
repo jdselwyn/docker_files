@@ -277,7 +277,7 @@ ENV PATH="/usr/local/maker/bin:${PATH}"
 RUN ln -s /usr/local/RepeatMasker/Libraries/RMRBSeqs.embl /usr/local/RepeatMasker/Libraries/RepeatMaskerLib.embl
 ENV REPEATMASKER_LIB_DIR=/usr/local/RepeatMasker/Libraries
 ENV BLAST_USAGE_REPORT=false
-RUN ln -s /usr/bin/cmsearch /usr/local/bin/cmsearch
+RUN ln -s /usr/bin/cmscan /usr/local/bin/cmscan
 
 #Extra Scripts
 WORKDIR /usr/local/bin
