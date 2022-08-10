@@ -278,6 +278,7 @@ RUN ln -s /usr/local/RepeatMasker/Libraries/RMRBSeqs.embl /usr/local/RepeatMaske
 ENV REPEATMASKER_LIB_DIR=/usr/local/RepeatMasker/Libraries
 ENV BLAST_USAGE_REPORT=false
 RUN ln -s /usr/bin/cmscan /usr/local/bin/cmscan
+RUN ln -s /usr/bin/cmsearch /usr/local/bin/cmsearch
 
 #Extra Scripts
 WORKDIR /usr/local/bin
