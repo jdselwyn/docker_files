@@ -17,6 +17,7 @@ RUN pip install h5py
 RUN apt-get install -y exonerate hmmer ncbi-blast+
 RUN apt-get install -y augustus augustus-data augustus-doc libyaml-perl
 RUN apt-get install -y infernal infernal-doc
+RUN apt-get -y install autoconf
 
 #Set language
 ENV LANGUAGE en_US.UTF-8
