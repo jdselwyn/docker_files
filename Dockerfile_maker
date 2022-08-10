@@ -248,9 +248,9 @@ WORKDIR /usr/local/bin
 RUN wget https://github.com/EVidenceModeler/EVidenceModeler/archive/refs/tags/v1.1.1.tar.gz \
   && tar -xzvf v1.1.1.tar.gz \
   && rm v1.1.1.tar.gz \
-  && mv EVidenceModeler-1.1.1/ EvidenceModeler
-RUN ln -s /usr/local/bin/EvidenceModeler/evidence_modeler.pl /usr/local/bin/EvidenceModeler/EvidenceModeler
-ENV EVM_HOME=/usr/local/bin/EvidenceModeler
+  && mv EVidenceModeler-1.1.1/ EVidenceModeler
+RUN ln -s /usr/local/bin/EVidenceModeler/evidence_modeler.pl /usr/local/bin/EvidenceModeler
+ENV EVM_HOME=/usr/local/bin/EVidenceModeler
 ENV PATH="/usr/local/bin/EvidenceModeler:${PATH}"
 
 #Install tRNAscan-SE
