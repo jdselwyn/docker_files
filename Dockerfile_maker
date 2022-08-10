@@ -250,6 +250,7 @@ RUN wget https://github.com/EVidenceModeler/EVidenceModeler/archive/refs/tags/v1
   && rm v1.1.1.tar.gz \
   && mv EVidenceModeler-1.1.1/ EVidenceModeler
 RUN ln -s /usr/local/bin/EVidenceModeler/evidence_modeler.pl /usr/local/bin/EvidenceModeler
+RUN ln -s /usr/local/bin/EVidenceModeler/evidence_modeler.pl /usr/local/bin/evm
 ENV EVM_HOME=/usr/local/bin/EVidenceModeler
 ENV PATH="/usr/local/bin/EvidenceModeler:${PATH}"
 
