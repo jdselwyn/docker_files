@@ -269,3 +269,4 @@ WORKDIR /usr/local/maker/src
 RUN printf '\n' | \
   perl ./Build.PL
 RUN perl ./Build install
+ENV PATH="/usr/local/maker/bin:${PATH}"
