@@ -1,0 +1,15 @@
+#Create container for NORGAL https://bitbucket.org/kosaidtu/norgal/src/master/ to run on NEU Discovery
+FROM centos
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
+RUN dnf -y groupinstall "Development Tools"
+RUN dnf install -y gcc make git wget python3 zip perl
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+#git clone https://github.com/kosaidtu/norgal.git
+
+#ln -s NORGAL/norgal.py ~/bin
