@@ -16,6 +16,7 @@ RUN python -m pip install -U matplotlib
 
 WORKDIR /opt
 RUN git clone https://bitbucket.org/kosaidtu/norgal.git
+RUN chmod 777 /opt/norgal/norgal.py
 RUN ln -s /opt/norgal/norgal.py /bin
 
 ENV PATH /opt/norgal:/bin:$PATH
