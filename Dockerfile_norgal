@@ -11,9 +11,11 @@ RUN dnf install -y gcc make git wget python3 zip perl
 RUN dnf install -y java-11-openjdk-devel
 RUN dnf install -y libjpeg-turbo-devel
 RUN ln -s /usr/bin/python3 /usr/bin/python
-#RUN dnf install -y python3-pillow
-#RUN pip3 install matplotlib
+RUN python -m pip install -U pip
+RUN python -m pip install -U matplotlib
 
-#git clone https://github.com/kosaidtu/norgal.git
+WORKDIR /opt
+#RUN git clone https://github.com/kosaidtu/norgal.git
+#RUN ln -s /opt/norgal/norgal.py /bin
 
-#ln -s NORGAL/norgal.py ~/bin
+#ENV PATH /opt/norgal:/bin:$PATH
