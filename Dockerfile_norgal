@@ -15,7 +15,7 @@ RUN python -m pip install -U pip
 RUN python -m pip install -U matplotlib
 
 WORKDIR /opt
-#RUN git clone https://github.com/kosaidtu/norgal.git
-#RUN ln -s /opt/norgal/norgal.py /bin
+RUN git clone https://bitbucket.org/kosaidtu/norgal.git
+RUN ln -s /opt/norgal/norgal.py /bin
 
-#ENV PATH /opt/norgal:/bin:$PATH
+ENV PATH /opt/norgal:/bin:$PATH
