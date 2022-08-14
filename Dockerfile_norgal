@@ -8,7 +8,11 @@ RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
 RUN dnf install -y gcc make git wget python3 zip perl
+RUN dnf install -y java-11-openjdk-devel
+RUN dnf install -y libjpeg-turbo-devel
 RUN ln -s /usr/bin/python3 /usr/bin/python
+#RUN dnf install -y python3-pillow
+#RUN pip3 install matplotlib
 
 #git clone https://github.com/kosaidtu/norgal.git
 
