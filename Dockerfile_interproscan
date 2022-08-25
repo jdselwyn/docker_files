@@ -17,8 +17,8 @@ COPY interproscan.properties /usr/local/interproscan-${IPSCAN_VERSION}/interpros
 RUN chmod a+r /usr/local/interproscan-${IPSCAN_VERSION}/interproscan.properties
 
 # Copy external software
-COPY external/signalp-4.1b.Linux.tar.Z /tmp/
-RUN tar zxf /tmp/signalp-4.1b.Linux.tar.Z -C /usr/local/interproscan-${IPSCAN_VERSION}/bin/signalp/4.1 --strip-components 1
+COPY external/signalp-4.1b.Linux.tar.gz /tmp/
+RUN tar zxf /tmp/signalp-4.1b.Linux.tar.gz -C /usr/local/interproscan-${IPSCAN_VERSION}/bin/signalp/4.1 --strip-components 1
 
 COPY external/tmhmm-2.0c.Linux.tar.gz /tmp/
 RUN  tar zxf /tmp/tmhmm-2.0c.Linux.tar.gz -C /tmp && \
