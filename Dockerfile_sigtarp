@@ -1,0 +1,20 @@
+FROM biocorecrg/debian-perlbrew:buster
+
+#Taken from: https://github.com/biocorecrg/sigtarp_docker/tree/2d486d6f75d4c1b8fadfe80c1f98ab26b18c33f7
+# File Author / Maintainer
+MAINTAINER Toni Hermoso Pulido <toni.hermoso@crg.eu>
+
+ARG SIGNALP_PATH=external/signalp/
+ARG TARGETP_PATH=external/targetp/
+
+# Place /scripts
+RUN mkdir -p /external
+
+RUN mkdir -p /external/signalp
+RUN mkdir -p /external/targetp
+
+COPY $SIGNALP_PATH /external/signalp
+COPY $TARGETP_PATH /external/targetp
+
+RUN ln -s /external/signalp/bin/signalp /usr/local/bin/signalp
+RUN ln -s /external/targetp/bin/targetp /usr/local/bin/targetp
