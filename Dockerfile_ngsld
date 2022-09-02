@@ -4,7 +4,8 @@ FROM tiagopeixoto/graph-tool
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
 RUN pacman -Syu
-RUN pacman -S --noconfirm gcc make git gsl perl cpanminus python python-pip r
+RUN pacman -S --noconfirm gcc make git gsl gcc-fortran perl python python-pip r
+RUN pacman -S --noconfirm cpanminus
 
 #RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
 #RUN dnf -y distro-sync
@@ -15,18 +16,17 @@ RUN pacman -S --noconfirm gcc make git gsl perl cpanminus python python-pip r
 #RUN dnf config-manager --set-enabled powertools
 #RUN dnf install -y R
 
-#RUN cpanm Getopt::Long && \
+#RUN cpan Getopt::Long && \
 #       cpanm Graph::Easy && \
 #       cpanm Math::BigFloat && \
 #       cpanm IO::Zlib
 
-#RUN pip3 install pandas
+RUN pip install pandas
 
-#RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "gtools", "BiocManager"), repos="https://cloud.r-project.org")' && \
-#  Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomInfoDb"), update = FALSE, ask = FALSE)'
+RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "gtools", "BiocManager"), repos="https://cloud.r-project.org")' && \
+  Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomeInfoDb"), update = FALSE, ask = FALSE)' && \
+  Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
 
-#Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
-
-#WORKDIR /opt
-#RUN git clone https://github.com/fgvieira/ngsLD.git && \
-#  cd
+WORKDIR /opt
+RUN git clone https://github.com/fgvieira/ngsLD.git && \
+  cd ngsLD
