@@ -7,7 +7,10 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git perl gsl cpanminus python3 python3-pip
+RUN dnf install -y gcc make git gsl perl cpanminus python3 python3-pip
+RUN dnf install -y epel-release
+RUN dnf config-manager --set-enabled powertools
+RUN dnf install -y R
 
 RUN cpanm Getopt::Long && \
        cpanm Graph::Easy && \
@@ -15,3 +18,12 @@ RUN cpanm Getopt::Long && \
        cpanm IO::Zlib
 
 RUN pip3 install pandas
+
+#RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "gtools", "BiocManager"), repos="https://cloud.r-project.org")' && \
+#  Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomInfoDb"), update = TRUE, ask = FALSE)'
+
+#Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
+
+#WORKDIR /opt
+#RUN git clone https://github.com/fgvieira/ngsLD.git && \
+#  cd 
