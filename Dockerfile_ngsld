@@ -1,5 +1,5 @@
 #Create container for ngsLD https://github.com/fgvieira/ngsLD to run on NEU Discovery
-FROM arch
+FROM tiagopeixoto/graph-tool
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
