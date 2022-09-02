@@ -3,6 +3,9 @@ FROM tiagopeixoto/graph-tool
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
+RUN pacman -Syu
+RUN pacman -S --noconfirm gcc make git gsl perl cpanminus r
+
 #RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
 #RUN dnf -y distro-sync
 #RUN dnf -y makecache
@@ -12,10 +15,10 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 #RUN dnf config-manager --set-enabled powertools
 #RUN dnf install -y R
 
-#RUN cpanm Getopt::Long && \
-#       cpanm Graph::Easy && \
-#       cpanm Math::BigFloat && \
-#       cpanm IO::Zlib
+RUN cpanm Getopt::Long && \
+       cpanm Graph::Easy && \
+       cpanm Math::BigFloat && \
+       cpanm IO::Zlib
 
 #RUN pip3 install pandas
 
