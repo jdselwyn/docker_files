@@ -4,37 +4,23 @@ FROM tiagopeixoto/graph-tool
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
 RUN pacman -Syu
-#RUN pacman -S --noconfirm gcc
-#pacman -S --noconfirm make
-#pacman -S --noconfirm git
-#pacman -S --noconfirm gsl
-#pacman -S --noconfirm gcc-fortran
-#pacman -S --noconfirm perl
-#pacman -S --noconfirm python
-#pacman -S --noconfirm python-pip
-#pacman -S --noconfirm r
-#RUN pacman -S --noconfirm cpanminus
+RUN pacman -S --noconfirm gcc make git gsl gcc-fortran python-pip r
 
-#RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
-#RUN dnf -y distro-sync
-#RUN dnf -y makecache
-#RUN dnf -y groupinstall "Development Tools"
-#RUN dnf install -y gcc make git gsl perl cpanminus python3 python3-pip
-#RUN dnf install -y epel-release
-#RUN dnf config-manager --set-enabled powertools
-#RUN dnf install -y R
+ln /usr/bin/vendor_perl/cpanm /usr/bin
 
-#RUN cpan Getopt::Long && \
-#       cpanm Graph::Easy && \
-#       cpanm Math::BigFloat && \
-#       cpanm IO::Zlib
+RUN cpanm Getopt::Long && \
+       cpanm Graph::Easy && \
+       cpanm Math::BigFloat && \
+       cpanm IO::Zlib
 
-#RUN pip install pandas
+RUN pip install pandas
 
-#RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "gtools", "BiocManager"), repos="https://cloud.r-project.org")' && \
-#  Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomeInfoDb"), update = FALSE, ask = FALSE)' && \
-#  Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
+RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "gtools", "BiocManager"), repos="https://cloud.r-project.org")' && \
+  Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomeInfoDb"), update = FALSE, ask = FALSE)' && \
+  Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
 
 #WORKDIR /opt
 #RUN git clone https://github.com/fgvieira/ngsLD.git && \
-#  cd ngsLD
+#  cd ngsLD && \
+#  make
+#  make clean
