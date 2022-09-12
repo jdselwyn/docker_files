@@ -4,7 +4,7 @@ FROM tiagopeixoto/graph-tool
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
 RUN pacman -Syu
-RUN pacman -S --noconfirm gcc
+#RUN pacman -S --noconfirm gcc
 pacman -S --noconfirm make
 pacman -S --noconfirm git
 pacman -S --noconfirm gsl
