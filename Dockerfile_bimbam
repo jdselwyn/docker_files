@@ -1,0 +1,14 @@
+#Create container for BIMBAM (http://www.haplotype.org/software.html) to run on NEU Discovery
+
+FROM centos
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
+RUN dnf -y groupinstall "Development Tools"
+RUN dnf install -y gcc make git wget
+
+WORKDIR /opt
+RUN wget http://www.haplotype.org/download/hapQTL-latest.tar.gz
