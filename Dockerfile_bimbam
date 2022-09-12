@@ -13,5 +13,8 @@ RUN ln /usr/lib/x86_64-linux-gnu/libgsl* /usr/local/lib
 WORKDIR /opt
 RUN wget http://www.haplotype.org/download/bimbam-latest.tar.gz && \
   tar -xvf bimbam-latest.tar.gz && \
+  rm bimbam-latest.tar.gz && \
   cd bimbam && \
   make
+  
+ENV PATH /opt/bimbam:$PATH
