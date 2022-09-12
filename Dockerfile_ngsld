@@ -6,7 +6,7 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 RUN pacman -Syu
 RUN pacman -S --noconfirm gcc make git gsl gcc-fortran python-pip r
 
-ln /usr/bin/vendor_perl/cpanm /usr/bin
+RUN ln /usr/bin/vendor_perl/cpanm /usr/bin
 
 RUN cpanm Getopt::Long && \
        cpanm Graph::Easy && \
