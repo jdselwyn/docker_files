@@ -5,7 +5,7 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
 RUN pacman -Syu
 RUN pacman -S --noconfirm gcc make git gsl gcc-fortran python-pip r
-RUN pacman -S --noconfirm cpanminus 
+RUN pacman -S --noconfirm cpanminus pkgconf
 
 RUN ln /usr/bin/vendor_perl/cpanm /usr/bin
 
@@ -20,8 +20,8 @@ RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "g
   Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomeInfoDb"), update = FALSE, ask = FALSE)' && \
   Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
 
-#WORKDIR /opt
-#RUN git clone https://github.com/fgvieira/ngsLD.git && \
-#  cd ngsLD && \
-#  make
-#  make clean
+WORKDIR /opt
+RUN git clone https://github.com/fgvieira/ngsLD.git && \
+  cd ngsLD && \
+  make
+ENV PATH /opt/ngsLD:$PATH
