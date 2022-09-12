@@ -4,12 +4,6 @@ FROM ubuntu
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
-#RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
-#RUN dnf -y distro-sync
-#RUN dnf -y makecache
-#RUN dnf -y groupinstall "Development Tools"
-#RUN dnf install -y gcc make git wget gsl
-
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y build-essential
@@ -17,7 +11,7 @@ RUN apt-get install -y gcc make wget libgsl-dev
 RUN ln /usr/lib/x86_64-linux-gnu/libgsl* /usr/local/lib
 
 WORKDIR /opt
-RUN wget http://www.haplotype.org/download/bimbam-latest.tar.gz & \
-  tar -xvf bimbam-latest.tar.gz & \
-  cd bimbam & \
+RUN wget http://www.haplotype.org/download/bimbam-latest.tar.gz && \
+  tar -xvf bimbam-latest.tar.gz && \
+  cd bimbam && \
   make
