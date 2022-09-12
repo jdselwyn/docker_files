@@ -5,6 +5,7 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
 RUN pacman -Syu
 RUN pacman -S --noconfirm gcc make git gsl gcc-fortran python-pip r
+RUN pacman -S --noconfirm cpanminus 
 
 RUN ln /usr/bin/vendor_perl/cpanm /usr/bin
 
