@@ -1,27 +1,80 @@
-#Create container for ngsLD https://github.com/fgvieira/ngsLD to run on NEU Discovery
-FROM tiagopeixoto/graph-tool
+FROM docker.io/library/ubuntu:22.04
 
-MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+ENV PATH /opt/ngsLD:$PATH
 
-RUN pacman -Syu
-RUN pacman -S --noconfirm gcc make git gsl gcc-fortran python-pip r
-RUN pacman -S --noconfirm cpanminus pkgconf
+# pkgconf and zlib1g-dev needed by ngsLD
+# libcurl4-openssl-dev is for curl-config command needed by R package RCurl
+# libxml2-dev is for xml2-config command needed by R package XML
+# cpanminus is for installation of ngsLD optional dependencies
+# python3-pandas is an optional dependency for ngsLD:
+# https://github.com/fgvieira/ngsLD#installation
+RUN apt-get -y update \
+    && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get -y install \
+    build-essential \
+    cmake \
+    cpanminus \
+    curl \
+    git \
+    libboost-all-dev \
+    libcairomm-1.0-dev \
+    libcgal-dev \
+    libcurl4-openssl-dev \
+    libexpat1-dev \
+    libgmp-dev \
+    libgsl-dev \
+    libgtk-3-dev \
+    libpython3-dev \
+    libsparsehash-dev \
+    libxml2-dev \
+    locales \
+    pkgconf \
+    python3-cairo-dev \
+    python3-matplotlib \
+    python3-numpy \
+    python3-pandas \
+    python3-pip \
+    python3-scipy \
+    r-base \
+    zlib1g-dev \
+    && \
+    apt-get clean
 
-RUN ln /usr/bin/vendor_perl/cpanm /usr/bin
+RUN locale-gen en_US.UTF-8
 
-RUN cpanm Getopt::Long && \
-       cpanm Graph::Easy && \
-       cpanm Math::BigFloat && \
-       cpanm IO::Zlib
+# optional dependencies for ngsLD:
+# https://github.com/fgvieira/ngsLD#installation
+RUN cpanm Getopt::Long Graph::Easy Math::BigFloat IO::Zlib
 
-RUN pip install pandas
+# optional dependencies for ngsLD:
+# https://github.com/fgvieira/ngsLD#installation
+RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "gtools", "BiocManager", "RCurl", "XML", "restfulr"), repos="https://cloud.r-project.org")' \
+    && \
+    Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomeInfoDb"), update = FALSE, ask = FALSE)' \
+    && \
+    Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
 
-RUN Rscript -e 'install.packages(c("optparse", "ggplot2", "reshape2", "plyr", "gtools", "BiocManager"), repos="https://cloud.r-project.org")' && \
-  Rscript -e 'BiocManager::install(c("snpStats", "IRanges", "rtracklayer", "GenomicRanges", "GenomeInfoDb"), update = FALSE, ask = FALSE)' && \
-  Rscript -e 'install.packages("LDheatmap", repos="https://cloud.r-project.org")'
+WORKDIR /usr/local/src
+
+RUN git clone -b release-2.45 https://git.skewed.de/count0/graph-tool.git \
+    && \
+    cd graph-tool \
+    && \
+    autoreconf -i \
+    && \
+    ./configure \
+    && \
+    make -j$(( $(nproc) / 2 )) \
+    && \
+    make install
 
 WORKDIR /opt
-RUN git clone https://github.com/fgvieira/ngsLD.git && \
-  cd ngsLD && \
-  make
-ENV PATH /opt/ngsLD:$PATH
+
+RUN git clone https://github.com/fgvieira/ngsLD.git \
+    && \
+    cd ngsLD \
+    && \
+    make
