@@ -8,5 +8,13 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget
-#RUN ln -s /usr/bin/python2 /usr/bin/python
+RUN dnf install -y gcc make git wget gsl-devel epel-release
+RUN dnf install -y snapd
+RUN systemctl enable --now snapd.socket
+RUN ln -s /var/lib/snapd/snap /snap
+RUN snap install dmd --classic
+
+WORKDIR /opt
+
+
+ENV PATH /opt/:$PATH
