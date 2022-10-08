@@ -1,5 +1,5 @@
 #Create container for LongStitch (https://github.com/bcgsc/LongStitch) to run on NEU Discovery
 
-FROM linuxbrew/linuxbrew
+FROM ubuntu
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
