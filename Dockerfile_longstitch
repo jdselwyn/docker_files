@@ -1,5 +1,14 @@
 #Create container for LongStitch (https://github.com/bcgsc/LongStitch) to run on NEU Discovery
 
-FROM quay.io/biocontainers/tigmint
+FROM linuxbrew/linuxbrew
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+WORKDIR /home/linuxbrew/tigmint
+ADD . .
+RUN sudo chown -R linuxbrew: . \
+	&& brew bundle \
+	&& rm -rf /home/linuxbrew/.cache \
+	&& pip3 install cython git+https://github.com/daler/pybedtools.git \
+	&& pip3 install -r requirements.txt
+ENV PATH="/home/linuxbrew/tigmint/bin:$PATH"
