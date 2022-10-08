@@ -8,14 +8,18 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget
+RUN dnf install -y gcc make git wget python3
 
 WORKDIR /opt
 
-RUN wget https://github.com/bcgsc/LongStitch/releases/download/v1.0.3/longstitch-1.0.3.tar.gz && \
-  tar -xvf longstitch*tar.gz && \
-  rm -rf longstitch*tar.gz && \
-  mv longstitch* longstitch
+#Install tigmint
+
+
+#install longstitch
+#RUN wget https://github.com/bcgsc/LongStitch/releases/download/v1.0.3/longstitch-1.0.3.tar.gz && \
+#  tar -xvf longstitch*tar.gz && \
+#  rm -rf longstitch*tar.gz && \
+#  mv longstitch* longstitch
   #cd longstitch* && \
 
-ENV PATH /opt/longstitch:$PATH
+#ENV PATH /opt/longstitch:$PATH
