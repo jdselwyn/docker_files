@@ -12,5 +12,10 @@ RUN dnf install -y gcc make git wget
 
 WORKDIR /opt
 
+RUN wget https://github.com/bcgsc/LongStitch/releases/download/v1.0.3/longstitch-1.0.3.tar.gz && \
+  tar -xvf longstitch*tar.gz && \
+  rm -rf longstitch*tar.gz && \
+  mv longstitch* longstitch
+  #cd longstitch* && \
 
-ENV PATH /opt/:$PATH
+ENV PATH /opt/longstitch:$PATH
