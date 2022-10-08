@@ -4,8 +4,8 @@ FROM ubuntu
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 
-apt-get update -y && apt-get upgrade -y
-apt-get install -y bsdmainutils libgomp1 make openmpi-bin ssh sudo \
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install -y bsdmainutils libgomp1 make openmpi-bin ssh sudo \
                   automake g++ libboost-dev libopenmpi-dev libsparsehash-dev \
                   git
 
