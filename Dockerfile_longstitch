@@ -1,35 +1,5 @@
 #Create container for LongStitch (https://github.com/bcgsc/LongStitch) to run on NEU Discovery
 
-FROM centos
+FROM quay.io/biocontainers/tigmint
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
-
-RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
-RUN dnf -y distro-sync
-RUN dnf -y makecache
-RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget python3
-
-# Install miniconda
-ENV CONDA_DIR /opt/conda
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
-     /bin/bash ~/miniconda.sh -b -p /opt/conda
-
-# Put conda in path so we can use conda activate
-ENV PATH=$CONDA_DIR/bin:$PATH
-
-WORKDIR /opt
-#Install tigmint
-#git clone https://github.com/bcgsc/tigmint && \
-#  cd tigmint
-#make -C src
-
-
-#install longstitch
-#RUN wget https://github.com/bcgsc/LongStitch/releases/download/v1.0.3/longstitch-1.0.3.tar.gz && \
-#  tar -xvf longstitch*tar.gz && \
-#  rm -rf longstitch*tar.gz && \
-#  mv longstitch* longstitch
-  #cd longstitch* && \
-
-#ENV PATH /opt/longstitch:$PATH
