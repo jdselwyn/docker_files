@@ -11,6 +11,7 @@ RUN dnf install -y gcc make git wget perl python2-devel python2-pip bzip2-devel
 RUN dnf config-manager --set-enabled powertools
 RUN pip2 install Cython
 RUN pip2 install pysam
+RUN pip2 install numpy
 
 RUN ln -s /bin/python2 /bin/python
 
