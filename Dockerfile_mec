@@ -14,7 +14,7 @@ RUN pip2 install pysam
 
 RUN ln -s /bin/python2 /bin/python
 
-#WORKDIR /opt
+WORKDIR /opt
 
 #Install HTSlib
 RUN git clone https://github.com/samtools/htslib \
