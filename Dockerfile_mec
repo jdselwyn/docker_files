@@ -10,8 +10,7 @@ RUN dnf -y groupinstall "Development Tools"
 RUN dnf install -y gcc make git wget perl python2-devel python2-pip bzip2-devel
 RUN dnf config-manager --set-enabled powertools
 RUN pip2 install Cython
-
-#pip2 install pysam
+RUN pip2 install pysam
 
 #WORKDIR /opt
 
@@ -43,5 +42,5 @@ RUN wget -O bowtie2.zip https://sourceforge.net/projects/bowtie-bio/files/bowtie
 ENV PATH /opt/bowtie2:$PATH
 
 #Install MEC
-#RUN git clone https://github.com/bioinfomaticsCSU/MEC
-#ENV PATH /opt/MEC/src:$PATH
+RUN git clone https://github.com/bioinfomaticsCSU/MEC
+ENV PATH /opt/MEC/src:$PATH
