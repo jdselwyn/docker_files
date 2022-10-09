@@ -7,9 +7,11 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget perl python2 python2-pip bzip2-devel
-#RUN pip2 install Cython pysam
-#RUN dnf config-manager --set-enabled powertools
+RUN dnf install -y gcc make git wget perl python2-devel python2-pip bzip2-devel
+RUN dnf config-manager --set-enabled powertools
+RUN pip2 install Cython
+
+#pip2 install pysam
 
 #WORKDIR /opt
 
