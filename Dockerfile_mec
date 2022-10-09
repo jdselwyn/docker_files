@@ -12,7 +12,7 @@ RUN dnf config-manager --set-enabled powertools
 RUN pip2 install Cython
 RUN pip2 install pysam
 
-ln -s /bin/python2 /bin/python
+RUN ln -s /bin/python2 /bin/python
 
 #WORKDIR /opt
 
