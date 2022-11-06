@@ -19,7 +19,6 @@ RUN wget https://cpan.metacpan.org/authors/id/N/NW/NWCLARK/perl-5.8.9.tar.bz2 \
   && cd perl* \
   && sh Configure -de \
   && make \
-  && make test \
   && make install \
   && rm -rf /usr/bin/perl \
   && ln -s /opt/perl*/perl /usr/bin/perl
