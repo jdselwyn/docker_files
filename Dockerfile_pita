@@ -8,16 +8,29 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 #RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make git wget
+RUN dnf install -y gcc make wget tar bzip2
 
 WORKDIR /opt
 
-#RUN wget https://genie.weizmann.ac.il/pubs/mir07/64bit_exe_pita_prediction.tar.gz -O /opt/pita
-#RUN tar xvfz pita
+#Downgrade Perl to 5.8.9 (end of 2008 version - last update to PITA)
+wget https://cpan.metacpan.org/authors/id/N/NW/NWCLARK/perl-5.8.9.tar.bz2 \
+  && tar -xvf perl*bz2 \
+  && rm -rf perl*bz2 \
+  && cd perl* \
+  && sh Configure -de \
+  && make \
+  && make test \
+  && make install \
+  && rm -rf /usr/bin/perl \
+  && ln -s /opt/perl*/perl /usr/bin/perl
 
-#RUN make install
+WORKDIR /opt
+RUN wget https://genie.weizmann.ac.il/pubs/mir07/64bit_exe_pita_prediction.tar.gz -O /opt/pita
+RUN tar xvfz pita
 
-#RUN chmod -R 755 lib Bin pita_prediction.pl
-#RUN chmod 775 known_mirs
+RUN make install
 
-#ENV PATH /opt:$PATH
+RUN chmod -R 755 lib Bin pita_prediction.pl
+RUN chmod 775 known_mirs
+
+ENV PATH /opt:$PATH
