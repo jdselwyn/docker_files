@@ -13,7 +13,7 @@ RUN dnf install -y gcc make wget tar bzip2
 WORKDIR /opt
 
 #Downgrade Perl to 5.8.9 (end of 2008 version - last update to PITA)
-wget https://cpan.metacpan.org/authors/id/N/NW/NWCLARK/perl-5.8.9.tar.bz2 \
+RUN wget https://cpan.metacpan.org/authors/id/N/NW/NWCLARK/perl-5.8.9.tar.bz2 \
   && tar -xvf perl*bz2 \
   && rm -rf perl*bz2 \
   && cd perl* \
