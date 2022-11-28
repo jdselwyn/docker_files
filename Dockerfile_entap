@@ -125,7 +125,7 @@ RUN cat /apps/EnTAP/EnTAP-v0.10.8-beta/entap_config.ini |\
   sed "s|entap-db-bin=/bin/entap_database.bin|entap-db-bin=/work/vollmer/Databases/entap/entap_database.bin|g" |\
   sed "s|entap-db-sql=/databases/entap_database.db|entap-db-sql=/work/vollmer/Databases/entap/entap_database.db|g" |\
   sed "s|eggnog-sql=/databases/eggnog.db|eggnog-sql=/work/vollmer/Databases/entap/eggnog.db|g" |\
-  sed "s|eggnog-dmnd=/bin/eggnog_proteins.dmnd|eggnog-dmnd=/work/vollmer/Databases/entap/eggnog_proteins.dmnd|g" |\
+  sed "s|eggnog-dmnd=/bin/eggnog_proteins.dmnd|eggnog-dmnd=/work/vollmer/Databases/entap/eggnog_proteins.dmnd|g" >\
   /opt/entap_config.ini
 RUN mv /opt/entap_config.ini /apps/EnTAP/EnTAP-v0.10.8-beta/entap_config.ini
 
