@@ -7,7 +7,7 @@ RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-
 RUN dnf -y distro-sync
 RUN dnf -y makecache
 RUN dnf -y groupinstall "Development Tools"
-RUN dnf install -y gcc make wget python2 zip perl
+RUN dnf install -y gcc make cmake wget python2 zip perl
 RUN ln -s /usr/bin/python2 /usr/bin/python
 
 RUN dnf config-manager --set-enabled powertools
@@ -15,4 +15,18 @@ RUN dnf config-manager --set-enabled powertools
 
 WORKDIR /opt
 
-RUN wget https://gitlab.com/enTAP/EnTAP/-/archive/v0.10.8-beta/EnTAP-v0.10.8-beta.tar.gz
+RUN wget https://gitlab.com/enTAP/EnTAP/-/archive/v0.10.8-beta/EnTAP-v0.10.8-beta.tar.gz \
+  && tar -xvf EnTAP* \
+  && rm -rf EnTAP*tar.gz \
+  && cd EnTAP* \
+  && cd libs/diamond* \
+  && mkdir bin \
+  && cd bin \
+  && cmake ..
+
+  #\
+  #&& make install \
+  #&& make
+
+
+#Add path to DIAMOND to entap_config.txt
