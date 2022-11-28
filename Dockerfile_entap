@@ -87,7 +87,6 @@ RUN APPNAME=RSEM && \
     make install
 
 ### EnTAP ###
-
 # Download EnTAP and build included deps
 # https://entap.readthedocs.io/en/latest/Getting_Started/installation.html
 RUN APPNAME=EnTAP && \
@@ -102,3 +101,46 @@ RUN APPNAME=EnTAP && \
   make
 
 ENV PATH=/apps/EnTAP/EnTAP-v0.10.8-beta/:$PATH
+
+
+### Create Initial ini file ###
+WORKDIR /opt
+
+## Program Locations
+RUN cat /apps/EnTAP/EnTAP-v0.10.8-beta/entap_config.ini |\
+  sed "s|entap-graph=/src/entap_graphing.py|entap-graph=/apps/EnTAP/EnTAP-v0.10.8-beta/src/entap_graphing.py|g" |\
+  sed "s|rsem-calculate-expression=/libs/RSEM-1.3.3//rsem-calculate-expression|rsem-calculate-expression=/apps/RSEM/RSEM-1.3.3/rsem-calculate-expression|g" |\
+  sed "s|rsem-sam-validator=/libs/RSEM-1.3.3//rsem-sam-validator|rsem-sam-validator=/apps/RSEM/RSEM-1.3.3/rsem-sam-validator|g" |\
+  sed "s|rsem-prepare-reference=/libs/RSEM-1.3.3//rsem-prepare-reference|rsem-prepare-reference=/apps/RSEM/RSEM-1.3.3/rsem-prepare-reference|g" |\
+  sed "s|convert-sam-for-rsem=/libs/RSEM-1.3.3//convert-sam-for-rsem|convert-sam-for-rsem=/apps/RSEM/RSEM-1.3.3/convert-sam-for-rsem|g" |\
+  sed "s|transdecoder-long-exe=TransDecoder.LongOrfs|transdecoder-long-exe=/apps/TransDecoder/TransDecoder-TransDecoder-v5.3.0/TransDecoder.LongOrfs|g" |\
+  sed "s|transdecoder-predict-exe=TransDecoder.Predict|transdecoder-predict-exe=/apps/TransDecoder/TransDecoder-TransDecoder-v5.3.0/TransDecoder.Predict|g" |\
+  sed "s|diamond-exe=/libs/diamond-0.9.9/bin/diamond|diamond-exe=/apps/diamond/diamond|g" >\
+  /opt/entap_config.ini
+RUN mv /opt/entap_config.ini /apps/EnTAP/EnTAP-v0.10.8-beta/entap_config.ini
+
+
+## Database Locations
+RUN cat /apps/EnTAP/EnTAP-v0.10.8-beta/entap_config.ini |\
+  sed "s|entap-db-bin=/bin/entap_database.bin|entap-db-bin=/work/vollmer/Databases/entap/entap_database.bin|g" |\
+  sed "s|entap-db-sql=/databases/entap_database.db|entap-db-sql=/work/vollmer/Databases/entap/entap_database.db|g" |\
+  sed "s|eggnog-sql=/databases/eggnog.db|eggnog-sql=/work/vollmer/Databases/entap/eggnog.db|g" |\
+  sed "s|eggnog-dmnd=/bin/eggnog_proteins.dmnd|eggnog-dmnd=/work/vollmer/Databases/entap/eggnog_proteins.dmnd|g" |\
+  /opt/entap_config.ini
+RUN mv /opt/entap_config.ini /apps/EnTAP/EnTAP-v0.10.8-beta/entap_config.ini
+
+
+## Settings
+
+#complete=false
+#transdecoder-m=100
+#transdecoder-no-refine-starts=false
+#output-format=1,3,4,5,6,
+#ontology=0,
+#level=0,1,
+#taxon=
+#qcoverage=50
+#tcoverage=50
+#contam=
+#e-value=1e-05
+#uninformative=conserved,predicted,unknown,unnamed,hypothetical,putative,unidentified,uncharacterized,uncultured,uninformative,
