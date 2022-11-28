@@ -1,0 +1,18 @@
+#Create container for EnTAP https://entap.readthedocs.io/en/latest/ to run on NEU Discovery
+FROM centos
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN dnf -y --disablerepo '*' --enablerepo=extras swap centos-linux-repos centos-stream-repos
+RUN dnf -y distro-sync
+RUN dnf -y makecache
+RUN dnf -y groupinstall "Development Tools"
+RUN dnf install -y gcc make wget python2 zip perl
+RUN ln -s /usr/bin/python2 /usr/bin/python
+
+RUN dnf config-manager --set-enabled powertools
+
+
+WORKDIR /opt
+
+wget https://gitlab.com/enTAP/EnTAP/-/archive/v0.10.8-beta/EnTAP-v0.10.8-beta.tar.gz
