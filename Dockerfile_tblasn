@@ -1,0 +1,6 @@
+#Create container for Maker (https://github.com/Yandell-Lab/maker) to run on NEU Discovery
+#Modified from: https://github.com/chrishah/maker-docker
+
+FROM ubuntu
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
