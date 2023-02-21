@@ -1,5 +1,5 @@
 #Create container for table2asn (https://www.ncbi.nlm.nih.gov/genbank/table2asn/) to run on NEU Discovery
-#Modified from: https://github.com/chrishah/maker2gff_to_sqn
+#Follow: https://www.ncbi.nlm.nih.gov/genbank/genomes_gff/ to combine fasta & gff for NCBI
 
 FROM ubuntu
 
@@ -16,4 +16,4 @@ RUN mv *table2asn table2asn
 
 #./*table2asn -version
 
-ENV PATH="/usr/src/table2asn:${PATH}"
+ENV PATH="/usr/src:${PATH}"
