@@ -1,6 +1,19 @@
-#Create container for Maker (https://github.com/Yandell-Lab/maker) to run on NEU Discovery
-#Modified from: https://github.com/chrishah/maker-docker
+#Create container for table2asn (https://www.ncbi.nlm.nih.gov/genbank/table2asn/) to run on NEU Discovery
+#Modified from: https://github.com/chrishah/maker2gff_to_sqn
 
 FROM ubuntu
 
 MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN apt-get update --fix-missing
+RUN apt-get install -y build-essential wget
+
+WORKDIR /usr/src
+RUN wget ftp://ftp.ncbi.nlm.nih.gov/asn1-converters/by_program/table2asn/linux64.table2asn.gz && \
+  gunzip *.gz && \
+  chmod a+x *table2asn
+RUN mv *table2asn table2asn
+
+#./*table2asn -version
+
+ENV PATH="/usr/src/table2asn:${PATH}"
