@@ -19,6 +19,13 @@ RUN Rscript -e "install.packages(c('ape'), repos='https://cran.rstudio.com')"
 RUN echo '#!/usr/bin/env Rscript' > /opt/tree_convert
 RUN echo "ape::read.tree(commandArgs(trailingOnly = TRUE)) |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.newick'))" >> /opt/tree_convert
 RUN chmod +x /opt/tree_convert
+
+#Make script to make output ultrametric (issue with rounding)
+RUN echo '#!/usr/bin/env Rscript' > /opt/tree_ultrametric
+RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)) |> ape::chronoMPL() |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.ultrametric'))" >> /opt/tree_ultrametric
+RUN chmod +x /opt/tree_ultrametric
+ENV PATH /opt:$PATH
+
 ENV PATH /opt:$PATH
 
 WORKDIR /opt
