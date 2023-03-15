@@ -7,3 +7,11 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y build-essential
+RUN apt-get install -y git
+
+WORKDIR /opt
+
+RUN git clone https://github.com/tothuhien/lsd2
+RUN ln -s lsd2/lsd2_unix lsd2/lsd2
+
+ENV PATH /opt/lsd2:$PATH
