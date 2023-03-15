@@ -1,0 +1,10 @@
+#Create container for IQTRee (http://www.iqtree.org/doc/Quickstart#installation) to run on NEU Discovery
+
+FROM ubuntu
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y build-essential
+RUN apt-get install -y iqtree
