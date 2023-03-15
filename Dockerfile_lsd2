@@ -19,7 +19,7 @@ RUN Rscript -e "install.packages(c('ape'), repos='https://cran.rstudio.com')"
 RUN echo '#!/usr/bin/env Rscript' > /opt/tree_convert
 RUN echo "ape::read.tree(commandArgs(trailingOnly = TRUE)) |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.newick'))" >> /opt/tree_convert
 RUN chmod +x /opt/tree_convert
-ENV PATH /opt
+ENV PATH /opt:$PATH
 
 WORKDIR /opt
 
