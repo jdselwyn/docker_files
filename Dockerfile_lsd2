@@ -16,9 +16,9 @@ RUN apt-get install -y r-base
 RUN Rscript -e "install.packages(c('ape'), repos='https://cran.rstudio.com')"
 
 #Make script to convert tree to newick
-echo '#!/usr/bin/env Rscript' > /opt/tree_convert
-echo "ape::read.tree(commandArgs(trailingOnly = TRUE)) |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.newick'))" >> /opt/tree_convert
-chmod +x /opt/tree_convert
+RUN echo '#!/usr/bin/env Rscript' > /opt/tree_convert
+RUN echo "ape::read.tree(commandArgs(trailingOnly = TRUE)) |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.newick'))" >> /opt/tree_convert
+RUN chmod +x /opt/tree_convert
 ENV PATH /opt
 
 WORKDIR /opt
