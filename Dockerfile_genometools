@@ -13,4 +13,4 @@ WORKDIR /opt
 
 RUN wget http://genometools.org/pub/genometools-1.6.2.tar.gz
 
-ENV PATH /opt/GAG:$PATH
+#ENV PATH /opt/GAG:$PATH
