@@ -1,4 +1,4 @@
-#Create container for LSD2 (https://github.com/tothuhien/lsd2) to run on NEU Discovery
+#Create container for GAG (genomeannotation.github.io/GAG/) to run on NEU Discovery
 
 FROM ubuntu
 
