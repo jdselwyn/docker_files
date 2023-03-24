@@ -1,0 +1,16 @@
+#Create container for GenomeTools (http://genometools.org/index.html) to run on NEU Discovery
+
+FROM ubuntu
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y build-essential
+RUN apt-get install -y wget
+
+WORKDIR /opt
+
+RUN wget http://genometools.org/pub/genometools-1.6.2.tar.gz
+
+ENV PATH /opt/GAG:$PATH
