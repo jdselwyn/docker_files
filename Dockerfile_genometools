@@ -9,14 +9,3 @@ RUN apt-get -y upgrade
 RUN apt-get install -y build-essential
 RUN apt-get install -y wget
 RUN apt-get install -y genometools
-
-#WORKDIR /opt
-
-#RUN wget http://genometools.org/pub/genometools-1.6.2.tar.gz
-#RUN tar -xf genometools*tar.gz
-#rm -rf genometools*tar.gz
-#mv genometools* genometools
-#cd genometools
-#make
-
-#ENV PATH /opt/genometools/:$PATH
