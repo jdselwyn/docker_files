@@ -1,0 +1,17 @@
+#Create container for Annie (http://genomeannotation.github.io/annie/) to run on NEU Discovery
+
+FROM ubuntu
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y build-essential
+RUN apt-get install -y git python3
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+WORKDIR /opt
+
+RUN git clone https://github.com/genomeannotation/annie
+
+ENV PATH /opt/annie:$PATH
