@@ -1,0 +1,17 @@
+#Create container for MitoZ (https://github.com/linzhi2013/MitoZ) to run on NEU Discovery updated for Cnidaria per: (https://github.com/linzhi2013/MitoZ/issues/181)
+
+FROM guanliangmeng/mitoz:3.5
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+#RUN apt-get -y update
+#RUN apt-get -y upgrade
+#RUN apt-get install -y build-essential
+#RUN apt-get install -y git python3
+#RUN ln -s /usr/bin/python3 /usr/bin/python
+
+#WORKDIR /opt
+
+#RUN git clone https://github.com/genomeannotation/annie
+
+#ENV PATH /opt/annie:$PATH
