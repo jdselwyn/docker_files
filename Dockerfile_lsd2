@@ -21,16 +21,16 @@ RUN echo "ape::read.tree(commandArgs(trailingOnly = TRUE)) |> ape::write.tree(fi
 RUN chmod +x /opt/tree_convert
 
 #Make script to make output ultrametric (issue with rounding)
-#RUN echo '#!/usr/bin/env Rscript' > /opt/tree_ultrametric
-#RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)) |> ape::chronoMPL() |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.ultrametric'))" >> /opt/tree_ultrametric
-#RUN chmod +x /opt/tree_ultrametric
-#ENV PATH /opt:$PATH
-
 RUN echo '#!/usr/bin/env Rscript' > /opt/tree_ultrametric
-RUN echo "multiply_edge <- function(tree){tree\$edge.length <- tree\$edge.length * 1e6; tree}" >> /opt/tree_ultrametric
-RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)) |> multiply_edge() |> ape::chronoMPL() |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.ultrametric'))" >> /opt/tree_ultrametric
+RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)) |> ape::chronoMPL() |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.ultrametric'))" >> /opt/tree_ultrametric
 RUN chmod +x /opt/tree_ultrametric
 ENV PATH /opt:$PATH
+
+#RUN echo '#!/usr/bin/env Rscript' > /opt/tree_ultrametric
+#RUN echo "multiply_edge <- function(tree){tree\$edge.length <- tree\$edge.length * 1e6; tree}" >> /opt/tree_ultrametric
+#RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)) |> multiply_edge() |> ape::chronoMPL() |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.ultrametric'))" >> /opt/tree_ultrametric
+#RUN chmod +x /opt/tree_ultrametric
+#ENV PATH /opt:$PATH
 
 ENV PATH /opt:$PATH
 
