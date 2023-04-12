@@ -27,7 +27,7 @@ RUN chmod +x /opt/tree_ultrametric
 ENV PATH /opt:$PATH
 
 RUN echo '#!/usr/bin/env Rscript' > /opt/subtree_extract
-RUN echo "args <- commandArgs(trailingOnly = TRUE); print(args); tree_file <- args[1]; nodeChoice <- args[2]; ape::read.nexus(tree_file) |> ape::extract.clade(phy = _, node = nodeChoice) |> ape::write.tree(file = paste0(tree_file, '_', nodeChoice, '.subtree'))" >> /opt/subtree_extract
+RUN echo "args <- commandArgs(trailingOnly = TRUE); print(args); tree_file <- args[1]; nodeChoice <- args[2]; the_tree <- ape::read.nexus(tree_file); ape::extract.clade(phy = the_tree, node = nodeChoice) |> ape::write.tree(file = paste0(tree_file, '_', nodeChoice, '.subtree'))" >> /opt/subtree_extract
 RUN chmod +x /opt/subtree_extract
 ENV PATH /opt:$PATH
 
@@ -39,3 +39,4 @@ RUN git clone https://github.com/tothuhien/lsd2
 RUN cp /opt/lsd2/bin/lsd2_unix /opt/lsd2/bin/lsd2
 
 ENV PATH /opt/lsd2/bin:$PATH
+apt-get install -y r-base r-base-core r-recommended r-base-dev
