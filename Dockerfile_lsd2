@@ -26,11 +26,10 @@ RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)) |> ape::chronoMPL() 
 RUN chmod +x /opt/tree_ultrametric
 ENV PATH /opt:$PATH
 
-#RUN echo '#!/usr/bin/env Rscript' > /opt/tree_ultrametric
-#RUN echo "multiply_edge <- function(tree){tree\$edge.length <- tree\$edge.length * 1e6; tree}" >> /opt/tree_ultrametric
-#RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)) |> multiply_edge() |> ape::chronoMPL() |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE), '.ultrametric'))" >> /opt/tree_ultrametric
-#RUN chmod +x /opt/tree_ultrametric
-#ENV PATH /opt:$PATH
+RUN echo '#!/usr/bin/env Rscript' > /opt/subtree_extract
+RUN echo "ape::read.nexus(commandArgs(trailingOnly = TRUE)[1]) |> ape::extract.clade(node = commandArgs(trailingOnly = TRUE)[2]) |> ape::write.tree(file = paste0(commandArgs(trailingOnly = TRUE)[1], '_', commandArgs(trailingOnly = TRUE)[2], '.subtree'))" >> /opt/subtree_extract
+RUN chmod +x /opt/subtree_extract
+ENV PATH /opt:$PATH
 
 ENV PATH /opt:$PATH
 
