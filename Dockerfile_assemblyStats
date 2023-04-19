@@ -1,0 +1,18 @@
+#Create container for Assembly Stats (https://github.com/rjchallis/assembly-stats) to run on NEU Discovery
+
+FROM ubuntu
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y build-essential
+
+
+WORKDIR /opt
+
+RUN git clone https://github.com/rjchallis/assembly-stats
+
+ENV PATH /opt:$PATH
+
+#
