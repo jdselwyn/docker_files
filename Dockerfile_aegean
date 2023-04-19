@@ -7,17 +7,35 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y build-essential
-RUN apt-get install -y git libcairo2-dev libpango1.0-dev
+RUN apt-get install -y git curl wget libcairo2-dev libpango1.0-dev
+RUN apt-get install -y python2
+RUN ln -s /usr/bin/python2 /usr/bin/python
 
 WORKDIR /opt
 
 # Download, compile, and install the GenomeTools package
-#RUN curl -O http://genometools.org/pub/genometools-1.5.8.tar.gz \
-#  && tar xzf genometools-1.5.8.tar.gz \
-#  && cd genometools-1.5.8 \
-#  && make \
-#  && make install \
-#  && cd ..
+RUN curl -O http://genometools.org/pub/genometools-1.6.2.tar.gz \
+  && tar xzf genometools-*.tar.gz \
+  && rm -rf genometools-*.tar.gz \
+  && mv genometools-* genometools \
+  && cd genometools \
+  && make \
+  && make install \
+  && cd ..
+
+# Make sure that the compiler/linker can find the GenomeTools library
+RUN sh -c 'echo "/usr/local/lib" > /etc/ld.so.conf.d/genometools-x86_64.conf' \
+  && ldconfig
+
+# Download, compile, and install the  AEGeAn Toolkit
+RUN wget https://github.com/BrendelGroup/AEGeAn/archive/refs/tags/v0.16.0.tar.gz \
+  && tar xzf *.tar.gz \
+  && rm -rf *.tar.gz \
+  && mv AEGeAn-* AEGeAn \
+  && cd AEGeAn \
+  && make test \ #this breaks
+  && make install \
+  && ldconfig # Update linker config again
 
 ENV PATH /opt:$PATH
 #
