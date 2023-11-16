@@ -7,19 +7,40 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y build-essential
-RUN apt-get install -y libxml2-dev libfontconfig1-dev libssl-dev libcurl4-openssl-dev
+RUN apt-get install -y cmake \
+	libxml2-dev \
+	libfontconfig1-dev \
+	libssl-dev \
+	libcurl4-openssl-dev \
+	libharfbuzz-dev \
+	libfribidi-dev \
+	libfreetype6-dev \
+	libpng-dev \
+	libtiff5-dev \
+	libjpeg-dev
 
 ENV TZ=America/New_York
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get install -y r-base
 
 RUN Rscript -e "install.packages(c('tidyverse', 'tidymodels', 'BiocManager'), repos='https://cran.rstudio.com')"
-RUN Rscript -e "install.packages(c('future.batchtools', 'dofuture', 'magrittr'), repos='https://cran.rstudio.com')"
-RUN Rscript -e "install.packages(c('cmdstanr', 'rstanarm', 'tidyposterior'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "install.packages(c('future.batchtools', 'doFuture', 'doRNG', 'magrittr'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "install.packages(c('rstanarm', 'tidyposterior', 'lme4', 'lmerTest', 'glmmTMB'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "install.packages('cmdstanr', repos = c('https://mc-stan.org/r-packages/', getOption('repos')))"
+RUN Rscript -e "install.packages(c('emmeans', 'marginaleffects'), repos='https://cran.rstudio.com')"
 RUN Rscript -e "install.packages(c('discrim', 'baguette', 'themis', 'finetune'), repos='https://cran.rstudio.com')"
 RUN Rscript -e "install.packages(c('remotes', 'brulee', 'bonsai', 'rules'), repos='https://cran.rstudio.com')"
 RUN Rscript -e "install.packages(c('patchwork', 'adegenet', 'desirability2', 'fastshap'), repos='https://cran.rstudio.com')"
 RUN Rscript -e "install.packages(c('ggbump', 'ggbeeswarm', 'tidytext', 'shapviz'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "install.packages(c('glmnet', 'xrf', 'C5.0', 'ranger'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "install.packages(c('xgboost', 'rpart', 'dbarts', 'earth'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "install.packages(c('sparsediscrim', 'klaR', 'kernlab', 'nnet', 'kknn'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "BiocManager::install(c('mixOmics', 'YuLab-SMU/treedataverse'), ask = FALSE, update = FALSE)"
+RUN Rscript -e "install.packages(c('plsmod'), repos='https://cran.rstudio.com')"
+
+#RUN Rscript -e "cmdstanr::install_cmdstan(cores = parallel::detectCores())"
+#RUN Rscript -e "torch::install_torch(.inform_restart = FALSE)"
+
 
 
 #ENV PATH /opt/lsd2/bin:$PATH
