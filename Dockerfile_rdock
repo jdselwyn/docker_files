@@ -35,12 +35,12 @@ RUN Rscript -e "install.packages(c('ggbump', 'ggbeeswarm', 'tidytext', 'shapviz'
 RUN Rscript -e "install.packages(c('glmnet', 'xrf', 'C5.0', 'ranger'), repos='https://cran.rstudio.com')"
 RUN Rscript -e "install.packages(c('xgboost', 'rpart', 'dbarts', 'earth'), repos='https://cran.rstudio.com')"
 RUN Rscript -e "install.packages(c('sparsediscrim', 'klaR', 'kernlab', 'nnet', 'kknn'), repos='https://cran.rstudio.com')"
+RUN Rscript -e "remotes::install_github(c('YuLab-SMU/ggtree', 'xiangpin/ggtreeExtra'), upgrade = 'never')"
 RUN Rscript -e "BiocManager::install(c('mixOmics', 'YuLab-SMU/treedataverse'), ask = FALSE, update = FALSE)"
 RUN Rscript -e "install.packages(c('plsmod'), repos='https://cran.rstudio.com')"
 
-#RUN Rscript -e "cmdstanr::install_cmdstan(cores = parallel::detectCores())"
-#RUN Rscript -e "torch::install_torch(.inform_restart = FALSE)"
-
+RUN Rscript -e "cmdstanr::install_cmdstan(cores = parallel::detectCores())"
+RUN Rscript -e "torch::install_torch(.inform_restart = FALSE)"
 
 
 #ENV PATH /opt/lsd2/bin:$PATH
