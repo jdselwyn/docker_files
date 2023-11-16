@@ -43,4 +43,4 @@ RUN Rscript -e "cmdstanr::install_cmdstan(cores = parallel::detectCores())"
 RUN Rscript -e "torch::install_torch(.inform_restart = FALSE)"
 
 
-#ENV PATH /opt/lsd2/bin:$PATH
+ENV PATH /usr/bin:$PATH
