@@ -42,6 +42,8 @@ RUN Rscript -e "install.packages(c('plsmod'), repos='https://cran.rstudio.com')"
 RUN Rscript -e "cmdstanr::install_cmdstan(cores = parallel::detectCores())"
 RUN Rscript -e "torch::install_torch(.inform_restart = FALSE)"
 
+RUN rm -rf /usr/lib/R/library/nnet
+RUN rm -rf /usr/lib/R/library/rpart
 RUN ln -s /usr/local/lib/R/site-library/* /usr/lib/R/library/
 
 ENV PATH /usr/bin:$PATH
