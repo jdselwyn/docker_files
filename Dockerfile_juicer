@@ -50,7 +50,7 @@ RUN cd juicer-1.6.2 && chmod +x CPU/* CPU/common/*
 
 # Install Juicer tools
 ADD https://s3.amazonaws.com/hicfiles.tc4ga.com/public/juicer/juicer_tools_1.22.01.jar /opt/juicer-1.6.2/CPU/common
-RUN ln -s /opt/juicer-1.6.2/CPU/common/juicer_tools.1.7.6_jcuda.0.8.jar /opt/juicer-1.6.2/CPU/common/juicer_tools.jar
+RUN ln -s /opt/juicer-1.6.2/CPU/common/juicer_tools_1.22.01.jar /opt/juicer-1.6.2/CPU/common/juicer_tools.jar
 RUN ln -s juicer-1.6.2/CPU scripts
 
 # Version number contained in image
