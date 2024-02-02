@@ -67,7 +67,7 @@ ENV PATH=/opt:/opt/scripts:/opt/scripts/common:$PATH
 #https://github.com/theaidenlab/Juicer-Docker/issues/2
 
 # Add executability to juicer tools file
-RUN chmod 777 /opt/juicer-1.6.2/CPU/common/juicer_tools.*.jar
+#RUN chmod 777 /opt/juicer-1.6.2/CPU/common/juicer_tools.*.jar
 
 # Remove entrypoint
 #ENTRYPOINT []
