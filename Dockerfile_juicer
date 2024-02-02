@@ -38,17 +38,18 @@ RUN cd bwa && make
 
 # Install Samtools
 ADD https://github.com/samtools/samtools/releases/download/1.19/samtools-1.19.tar.bz2 .
-#RUN bunzip2 samtools-1.6.tar.bz2
-#RUN tar xf samtools-1.6.tar
-#RUN cd samtools-1.6 && ./configure --without-curses --disable-bz2 --disable-lzma && make && make install
+RUN bunzip2 samtools-*.tar.bz2
+RUN tar xf samtools-*.tar
+RUN rm -rf samtools-*.tar
+RUN cd samtools-* && ./configure --without-curses --disable-bz2 --disable-lzma && make && make install
 
 # Install Juicer
-#ADD https://github.com/theaidenlab/juicer/archive/1.6.2.zip .
-#RUN unzip 1.6.2.zip
-#RUN cd juicer-1.6.2 && chmod +x CPU/* CPU/common/*
+ADD https://github.com/theaidenlab/juicer/archive/1.6.2.zip .
+RUN unzip 1.6.2.zip
+RUN cd juicer-1.6.2 && chmod +x CPU/* CPU/common/*
 
 # Install Juicer tools
-#ADD http://hicfiles.tc4ga.com.s3.amazonaws.com/public/juicer/juicer_tools.1.7.6_jcuda.0.8.jar /opt/juicer-1.6.2/CPU/common
+ADD https://s3.amazonaws.com/hicfiles.tc4ga.com/public/juicer/juicer_tools_1.22.01.jar /opt/juicer-1.22.01/CPU/common
 #RUN ln -s /opt/juicer-1.6.2/CPU/common/juicer_tools.1.7.6_jcuda.0.8.jar /opt/juicer-1.6.2/CPU/common/juicer_tools.jar
 #RUN ln -s juicer-1.6.2/CPU scripts
 
