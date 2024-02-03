@@ -38,14 +38,16 @@ RUN wget https://github.com/rcedgar/muscle/releases/download/5.1.0/muscle5.1.lin
   && chmod 777 muscle5 \
   && ln -s muscle5 muscle
 
-#Install BioPython
+#Install BioPython & pyfasta
 RUN pip3 install biopython
+RUN pip3 install pyfasta
 
 #Install NCBI BLCA
-RUN git clone https://github.com/qunfengdong/BLCA.git \
-  && chmod 777 BLCA/1.subset_db_acc.py \
-  && chmod 777 BLCA/1.subset_db_gg.py \
-  && chmod 777 BLCA/2.blca_main.py \
+RUN git clone https://github.com/qunfengdong/BLCA.git
+# \
+#  && chmod 777 BLCA/1.subset_db_acc.py \
+#  && chmod 777 BLCA/1.subset_db_gg.py \
+#  && chmod 777 BLCA/2.blca_main.py \
 
 #Put things in PATH
 ENV LC_ALL C
