@@ -1,0 +1,21 @@
+#Create container for BLCA (https://github.com/qunfengdong/BLCA) to run on NEU Discovery
+
+# Set the base image to Ubuntu
+FROM ubuntu
+
+# File Author / Maintainer
+MAINTAINER Jason Selwyn
+
+# Update the repository sources list
+# Install base packages: git, python3
+RUN apt-get update && apt-get install -y \
+    gawk \
+    gcc \
+    git \
+    libz-dev \
+    locales \
+    make \
+    unzip \
+    bzip2 \
+    libbz2-dev \
+    wget
