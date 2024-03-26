@@ -1,0 +1,12 @@
+#Create container for DASTool (https://github.com/cmks/DAS_Tool) to run on NEU Discovery
+
+# Set the base image to Ubuntu
+FROM ubuntu
+
+# File Author / Maintainer
+MAINTAINER Jason Selwyn
+
+
+#Put things in PATH
+#ENV LC_ALL C
+#ENV PATH=/opt:/opt/BLCA:$PATH
