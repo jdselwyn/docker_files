@@ -27,7 +27,8 @@ RUN curl -SL https://github.com/samtools/bcftools/releases/download/${htslib_ver
     > bcftools-${htslib_version}.tar.bz2 && \
     tar -xjvf bcftools-${htslib_version}.tar.bz2 && \
     rm -rf bcftools-${htslib_version}.tar.bz2 && \
-    cd /tmp/bcftools-${htslib_version} && \
+    mv /tmp/bcftools-${htslib_version} /tmp/bcftools && \
+    cd /tmp/bcftools && \
     ./configure && \
     make && \
     make install && \
@@ -58,3 +59,8 @@ RUN curl -SL https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/bo
 #locate -b '\libm.so'
 #locate -b '\libpthread.so'
 #locate -b '\libcurl.so'
+
+
+## Install ShapeIT
+RUN git clone --recurse-submodules https://github.com/odelaneau/shapeit5.git && \
+  cd shapeit5
