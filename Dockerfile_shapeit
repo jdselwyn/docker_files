@@ -60,6 +60,39 @@ RUN curl -SL https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/bo
 #locate -b '\libcurl.so'
 
 
+
+
+
 ## Install ShapeIT
 RUN git clone --recurse-submodules https://github.com/odelaneau/shapeit5.git && \
   cd shapeit5
+
+  curl https://github.com/odelaneau/shapeit5/releases/download/v5.1.1/ligate_static
+
+#
+common/makefile_common.mk
+
+HTSSRC=/usr/local
+HTSLIB_INC=$(HTSSRC)/include/htslib
+HTSLIB_LIB=$(HTSSRC)/lib/libhts.a
+BOOST_INC=/usr/include
+BOOST_LIB_IO=$(shell whereis libboost_iostreams | grep -o '\S*\.a\b')
+BOOST_LIB_PO=$(shell whereis libboost_program_options | grep -o '\S*\.a\b')
+
+cd phase_common && \
+  make
+
+cd phase_rare && \
+  make
+
+cd switch && \
+  make
+
+cd ligate && \
+  make
+
+cd simulate && \
+  make
+
+cd xcftools && \
+  make
