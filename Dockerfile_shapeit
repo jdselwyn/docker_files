@@ -26,9 +26,35 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y \
 RUN curl -SL https://github.com/samtools/bcftools/releases/download/${htslib_version}/bcftools-${htslib_version}.tar.bz2 \
     > bcftools-${htslib_version}.tar.bz2 && \
     tar -xjvf bcftools-${htslib_version}.tar.bz2 && \
+    rm -rf bcftools-${htslib_version}.tar.bz2 && \
     cd /tmp/bcftools-${htslib_version} && \
     ./configure && \
     make && \
     make install && \
     rm -rf bcftools-${htslib_version}.tar.bz2 && \
     rm -rf bcftools-${htslib_version}
+
+## Install Boost
+RUN curl -SL https://boostorg.jfrog.io/artifactory/main/release/1.73.0/source/boost_1_73_0.tar.bz2 \
+    > boost.tar.bz2 && \
+    tar -xjvf boost.tar.bz2 && \
+    rm -rf boost.tar.bz2 && \
+    mv boost* boost && \
+    cd boost && \
+    ./bootstrap.sh --with-libraries=iostreams,program_options --prefix=../boost && \
+    ./b2 install && \
+    cd ../boost
+
+
+#
+#echo amd64 > /var/lib/dpkg/arch
+#echo i386 >> /var/lib/dpkg/arch
+#apt-get update
+#apt-get install plocate
+
+#locate -b '\libz.so'
+#locate -b '\libbz2.so'
+#locate -b '\liblzma.so'
+#locate -b '\libm.so'
+#locate -b '\libpthread.so'
+#locate -b '\libcurl.so'
