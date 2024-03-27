@@ -10,13 +10,15 @@ ENV htslib_version 1.15
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-RUN apt-get -y update
-RUN apt-get -y upgrade
-RUN apt-get install -y build-essential \
-  gcc \
-  git \
-  wget \
-  autoconf
+RUN apt-get update && apt-get -y upgrade && apt-get install -y \
+	apt-utils time curl gnupg gcc g++ make autoconf && \
+	apt-get clean && apt-get purge && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN apt-get update && apt-get -y upgrade && apt-get install -y \
+	git zlib1g-dev bzip2 libbz2-dev liblzma-dev && \
+	apt-get clean && apt-get purge && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /opt/
 
