@@ -1,0 +1,15 @@
+#Create container for Dorado (https://github.com/nanoporetech/dorado) to run on NEU Discovery
+
+# Set the base image to Ubuntu
+FROM ubuntu
+
+# File Author / Maintainer
+MAINTAINER Jason Selwyn
+
+WORKDIR /opt
+RUN apt-get update &&\
+ 	apt-get -y upgrade &&\
+	apt-get install -y \
+	apt-utils time curl gnupg gcc g++ make autoconf && \
+	apt-get clean && apt-get purge && \
+	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
