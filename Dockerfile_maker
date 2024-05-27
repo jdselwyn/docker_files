@@ -68,8 +68,6 @@ RUN rsync -aP rsync://hgdownload.soe.ucsc.edu/genome/admin/exe/linux.x86_64/blat
 ENV PATH="/usr/src/SNAP:/usr/share/augustus/scripts:${PATH}"
 
 #GeneMark
-#occassionally have to update license key. Download from here: https://genemark.bme.gatech.edu/
-#Download key for GeneMark-ES/ET/EP+ ver 4.72_lic
 RUN mkdir /usr/local/Genemark
 WORKDIR /usr/local/Genemark
 ADD gmes_linux_64_4.tar.gz /usr/local/Genemark
