@@ -7,3 +7,16 @@ MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
 RUN apt-get -y update
 RUN apt-get -y upgrade
 RUN apt-get install -y build-essential
+RUN apt-get install -y ruby-full wget
+RUN gem install bio
+
+WORKDIR /opt
+RUN wget -c https://github.com/yeban/flo/archive/master.tar.gz -O flo.tar.gz \
+  && tar xvf flo.tar.gz \
+  && mv flo-master flo \
+  && rm flo.tar.gz \
+  && flo/scripts/install.sh \
+
+
+
+ENV PATH="/opt:/opt/ext:/opt/flo:/opt/flo/scripts:${PATH}"
