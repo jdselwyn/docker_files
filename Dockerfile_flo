@@ -19,4 +19,4 @@ RUN wget -c https://github.com/yeban/flo/archive/master.tar.gz -O flo.tar.gz \
 
 
 
-ENV PATH /opt:/opt/ext:/opt/flo:/opt/flo/scripts:$PATH
+ENV PATH /opt:/opt/ext:/opt/flo:/opt/flo/scripts:/opt/ext/parallel*/src:/opt/ext/genometools*/bin:/opt/ext/kent/bin::$PATH
