@@ -15,8 +15,8 @@ RUN wget -c https://github.com/yeban/flo/archive/master.tar.gz -O flo.tar.gz \
   && tar xvf flo.tar.gz \
   && mv flo-master flo \
   && rm flo.tar.gz \
-  && flo/scripts/install.sh \
+  && flo/scripts/install.sh
 
 
 
-ENV PATH /opt/flo:$PATH
+ENV PATH /opt:/opt/ext:/opt/flo:/opt/flo/scripts:$PATH
