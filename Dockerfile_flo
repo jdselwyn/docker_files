@@ -17,6 +17,7 @@ RUN wget -c https://github.com/yeban/flo/archive/master.tar.gz -O flo.tar.gz \
   && rm flo.tar.gz \
   && flo/scripts/install.sh
 
+RUN mv /opt/ext/genometools* /opt/ext/genometools
+RUN mv /opt/ext/parallel* /opt/ext/parallel
 
-
-ENV PATH /opt:/opt/ext:/opt/flo:/opt/flo/scripts:/opt/ext/parallel*/src:/opt/ext/genometools*/bin:/opt/ext/kent/bin::$PATH
+ENV PATH /opt:/opt/ext:/opt/flo:/opt/flo/scripts:/opt/ext/parallel/src:/opt/ext/genometools/bin:/opt/ext/kent/bin::$PATH
