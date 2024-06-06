@@ -24,7 +24,7 @@ RUN mv /opt/ext/parallel* /opt/ext/parallel
 RUN cat /opt/flo/opts_example.yaml |\
   sed "s|  - 'ext/kent/bin'|#  - 'ext/kent/bin'|g" |\
   sed "s|  - 'ext/parallel-20150722/src'|#  - 'ext/parallel-20150722/src'|g" |\
-  sed "s|  - 'ext/genometools-1.5.6/bin'|#  - 'ext/parallel-20150722/src'|g" |\
+  sed "s|  - 'ext/genometools-1.5.6/bin'|#  - 'ext/parallel-20150722/src'|g" >\
   /opt/flo_config.yaml
 
 ENV PATH /opt:/opt/ext:/opt/flo:/opt/flo/scripts:/opt/ext/parallel/src:/opt/ext/genometools/bin:/opt/ext/kent/bin::$PATH
