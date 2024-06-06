@@ -1,0 +1,9 @@
+#Create container for FLO (https://github.com/wurmlab/flo) to run on NEU Discovery
+
+FROM ubuntu
+
+MAINTAINER Jason Selwyn "j.selwyn@northeastern.edu"
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y build-essential
