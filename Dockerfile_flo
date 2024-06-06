@@ -19,4 +19,4 @@ RUN wget -c https://github.com/yeban/flo/archive/master.tar.gz -O flo.tar.gz \
 
 
 
-ENV PATH="/opt:/opt/ext:/opt/flo:/opt/flo/scripts:${PATH}"
+ENV PATH /opt/flo:$PATH
