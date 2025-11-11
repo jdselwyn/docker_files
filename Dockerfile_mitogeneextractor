@@ -26,7 +26,8 @@ WORKDIR /opt
 RUN git clone https://github.com/cmayer/MitoGeneExtractor.git && \
     cd MitoGeneExtractor && \
     make && \
-    install -m 0755 MitoGeneExtractor-v* /opt/conda/envs/${ENV_NAME}/bin/ && \
+    mv MitoGeneExtractor-v* MitoGeneExtractor && \
+    install -m 0755 MitoGeneExtractor /opt/conda/envs/${ENV_NAME}/bin/ && \
     rm -rf /opt/MitoGeneExtractor
 # (Optional) default working dir for data
 WORKDIR /work
