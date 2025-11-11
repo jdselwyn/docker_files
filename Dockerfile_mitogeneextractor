@@ -8,11 +8,11 @@ MAINTAINER Jason Selwyn "jason.selwyn@tamucc.edu"
 
 
 # System build deps for MitoGeneExtractor (C++/make) + zlib for gz FASTQ
-#USER root
-#RUN apt-get update && \
-#    apt-get install -y --no-install-recommends \
-#      build-essential git zlib1g-dev ca-certificates && \
-#    rm -rf /var/lib/apt/lists/*
+USER root
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      build-essential git zlib1g-dev ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create env with exonerate from Bioconda (channels: conda-forge > bioconda)
 #ARG ENV_NAME=mge
