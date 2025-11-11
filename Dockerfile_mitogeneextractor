@@ -10,7 +10,7 @@ MAINTAINER Jason Selwyn "jason.selwyn@tamucc.edu"
 USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      build-essential git zlib1g-dev ca-certificates && \
+      build-essential git zlib1g-dev ca-certificates procps && \
     rm -rf /var/lib/apt/lists/*
 
 # Create env with exonerate from Bioconda (channels: conda-forge > bioconda)
