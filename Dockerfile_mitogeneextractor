@@ -2,7 +2,6 @@
 # ---- Build & runtime image with micromamba ----
 FROM mambaorg/micromamba:1.5.8
 
-
 # File Author / Maintainer
 MAINTAINER Jason Selwyn "jason.selwyn@tamucc.edu"
 
