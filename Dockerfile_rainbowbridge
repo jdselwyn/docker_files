@@ -1,0 +1,17 @@
+#Create container for rainbow_bridge (https://github.com/mhoban/rainbow_bridge) to run on TAMUCC Crest
+
+FROM ubuntu
+
+MAINTAINER Jason Selwyn "jason.selwyn@tamucc.edu"
+
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y build-essential
+RUN apt-get install -y git python3
+RUN ln -s /usr/bin/python3 /usr/bin/python
+
+WORKDIR /opt
+
+RUN git clone https://github.com/mhoban/rainbow_bridge
+
+#ENV PATH /opt/annie:$PATH
