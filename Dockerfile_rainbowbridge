@@ -16,4 +16,4 @@ WORKDIR /opt
 #Get rainbow_bridge
 RUN git clone https://github.com/mhoban/rainbow_bridge
 
-#ENV PATH /opt/rainbow_bridge:$PATH
+ENV PATH /opt/rainbow_bridge:$PATH
